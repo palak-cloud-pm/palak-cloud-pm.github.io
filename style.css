@@ -429,6 +429,7 @@ strong { color: var(--text-primary); font-weight: 600; }
   line-height: 1;
   margin-bottom: 0.25rem;
   letter-spacing: -0.03em;
+  white-space: nowrap;
 }
 
 .stat-label {
@@ -437,6 +438,7 @@ strong { color: var(--text-primary); font-weight: 600; }
   text-transform: uppercase;
   letter-spacing: 0.07em;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .stat-divider { display: none; } /* replaced by border-right on .stat */
