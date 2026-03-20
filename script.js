@@ -126,13 +126,14 @@ fadeElements.forEach(el => fadeObserver.observe(el));
 const typewriterEl = document.getElementById('typewriter');
 
 const PHRASES = [
-  'AI Innovation Leader',
+  'AI Copilot Builder',
   '30 Under 30 Honoree',
   'Enterprise SaaS Expert',
-  'Data-Led Strategist',
+  'RAG &amp; LLM Strategist',
   'IIT Kharagpur Alumni',
   'Global Product Leader',
-  'AI-First PM',
+  'Prompt Engineer at Heart',
+  'Data-Led Decision Maker',
 ];
 
 let phraseIndex = 0;

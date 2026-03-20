@@ -905,6 +905,198 @@ strong { color: var(--text-primary); font-weight: 600; }
 }
 
 /* ============================================================
+   EXPERIENCE TIMELINE
+   ============================================================ */
+
+.experience { background: var(--surface); }
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 2rem;
+}
+
+/* Vertical line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--border));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-marker {
+  position: absolute;
+  left: -2rem;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+  z-index: 1;
+  transition: box-shadow 0.2s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.timeline-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.timeline-card:hover {
+  border-color: rgba(var(--accent-rgb), 0.45);
+  transform: translateX(4px);
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.timeline-role {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.timeline-company {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.timeline-period {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 100px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.timeline-summary {
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+  line-height: 1.65;
+}
+
+.timeline-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+}
+
+.timeline-bullets li {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  padding-left: 1.1rem;
+  position: relative;
+  line-height: 1.55;
+}
+
+.timeline-bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.7rem;
+  top: 1px;
+}
+
+.timeline-bullets strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* ============================================================
+   CERTIFICATIONS
+   ============================================================ */
+
+.certs { background: var(--bg); }
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.cert-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.22s ease, transform 0.22s ease;
+}
+
+.cert-card:hover {
+  border-color: rgba(var(--accent-rgb), 0.45);
+  transform: translateY(-3px);
+}
+
+.cert-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.cert-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.35;
+}
+
+.cert-issuer {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.cert-status.ongoing {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============================================================
    SCROLL ANIMATIONS
    ============================================================ */
 
@@ -1020,6 +1212,15 @@ strong { color: var(--text-primary); font-weight: 600; }
     grid-template-columns: 1fr;
   }
 
+  .certs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .timeline-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
   /* Override split layout on tablet/mobile */
   .layout-split .hero {
     flex-direction: column;
@@ -1077,6 +1278,12 @@ strong { color: var(--text-primary); font-weight: 600; }
   .btn-lg { width: 100%; max-width: 360px; justify-content: center; }
 
   .project-card { padding: 1.5rem; }
+
+  .certs-grid { grid-template-columns: 1fr 1fr; }
+
+  .timeline { padding-left: 1.5rem; }
+
+  .timeline-header { flex-direction: column; gap: 0.5rem; }
 
   .theme-indicator { bottom: 1rem; right: 1rem; }
 }
