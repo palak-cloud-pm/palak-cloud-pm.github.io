@@ -405,12 +405,12 @@ strong { color: var(--text-primary); font-weight: 600; }
   align-items: center;
   gap: 0;
   margin-bottom: 2.5rem;
-  flex-wrap: wrap;
   border: var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  width: fit-content;
   background: var(--surface);
+  width: 100%;
+  max-width: 520px;
 }
 
 .stat {
