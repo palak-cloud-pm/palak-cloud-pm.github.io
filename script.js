@@ -13,47 +13,9 @@
 'use strict';
 
 // ============================================================
-// 1. DESIGN RANDOMISATION
+// 1. FIXED DESIGN — no randomisation (warm cream theme)
 // ============================================================
-
-const THEMES = [
-  { id: 'dark',  label: 'Dark Mode'          },
-  { id: 'blue',  label: 'Blue Tech'          },
-  { id: 'warm',  label: 'Warm Professional'  },
-  { id: 'green', label: 'Minimalist Green'   },
-];
-
-const LAYOUTS = ['left', 'center', 'split'];
-
-const ANIMATIONS = ['slide', 'scale', 'fade'];
-
-function pick(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-const selectedTheme  = pick(THEMES);
-const selectedLayout = pick(LAYOUTS);
-const selectedAnim   = pick(ANIMATIONS);
-
-// Apply classes to body
-document.body.classList.add(
-  `theme-${selectedTheme.id}`,
-  `layout-${selectedLayout}`,
-  `anim-${selectedAnim}`
-);
-
-// Brief theme indicator pill
-(function showThemeIndicator() {
-  const el = document.createElement('div');
-  el.className = 'theme-indicator';
-  el.setAttribute('aria-hidden', 'true');
-  el.textContent = `Theme: ${selectedTheme.label}`;
-  document.body.appendChild(el);
-
-  // Fade out after 3 s, remove after 4 s
-  setTimeout(() => { el.style.opacity = '0'; }, 3000);
-  setTimeout(() => { el.remove(); },            4000);
-})();
+// Design inspired by curious.pm — warm cream, pastel cards, dark borders.
 
 
 // ============================================================
@@ -129,7 +91,7 @@ const PHRASES = [
   'AI Copilot Builder',
   '30 Under 30 Honoree',
   'Enterprise SaaS Expert',
-  'RAG &amp; LLM Strategist',
+  'RAG & LLM Strategist',
   'IIT Kharagpur Alumni',
   'Global Product Leader',
   'Prompt Engineer at Heart',
