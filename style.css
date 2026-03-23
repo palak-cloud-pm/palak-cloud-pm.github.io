@@ -464,6 +464,7 @@ strong { color: var(--text); font-weight: 600; }
 .achievement-card:nth-child(3) { background: var(--blue);   }
 .achievement-card:nth-child(4) { background: var(--pink);   }
 .achievement-card:nth-child(5) { background: var(--purple); }
+.achievement-card:nth-child(6) { background: var(--peach);  }
 .achievement-card:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
 
 .ach-icon  { font-size: 1.3rem; flex-shrink: 0; line-height: 1; }
@@ -553,6 +554,7 @@ strong { color: var(--text); font-weight: 600; }
   display: flex; flex-direction: column;
   position: relative;
   transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 420px;
 }
 .work-card:hover { transform: translate(-4px,-4px); box-shadow: var(--shadow); }
 .work-card:nth-child(1) { background: var(--purple); }
@@ -561,29 +563,59 @@ strong { color: var(--text); font-weight: 600; }
 .work-card:nth-child(4) { background: var(--blue);   }
 
 .work-card-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  margin-top: 1.1rem;
-  font-size: 0.78rem; font-weight: 700;
-  color: var(--text);
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.82rem; font-weight: 800;
+  color: var(--bg);
   border: var(--border);
   border-radius: var(--pill);
-  padding: 6px 16px;
-  background: rgba(255,255,255,0.65);
-  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  padding: 9px 20px;
+  background: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s, box-shadow 0.18s;
   align-self: flex-start;
+  letter-spacing: -0.01em;
 }
 .work-card-link:hover {
-  transform: translate(-2px,-2px);
-  box-shadow: var(--shadow-sm);
-  background: var(--text); color: var(--bg);
+  transform: translate(-3px,-3px);
+  box-shadow: var(--shadow);
 }
 
 .work-featured-badge {
-  position: absolute; top: 1.1rem; right: 1.1rem;
-  background: var(--text); color: var(--bg);
-  font-size: 0.6rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: var(--pill);
+  display: inline-flex; align-items: center;
+  font-size: 0.58rem; font-weight: 800;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text);
+  background: rgba(255,255,255,0.55);
+  border: 1.5px solid var(--text);
+  padding: 2px 9px; border-radius: var(--pill);
+  vertical-align: middle;
+  position: relative; top: -1px;
+}
+
+.work-live-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.58rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text);
+  background: rgba(255,255,255,0.55);
+  border: 1.5px solid var(--text);
+  border-radius: var(--pill);
+  padding: 2px 9px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  animation: live-glow 2s ease-in-out infinite;
+}
+.live-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--text);
+  flex-shrink: 0;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+@keyframes live-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26,26,26,0.35); }
+  50%       { box-shadow: 0 0 0 5px rgba(26,26,26,0); }
 }
 
 .work-card-top {
@@ -623,7 +655,12 @@ strong { color: var(--text); font-weight: 600; }
 .cs-impact .cs-label::before { background: var(--text); }
 .cs-impact p { color: var(--text); font-weight: 500; }
 
-.work-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+.work-card-footer {
+  margin-top: auto;
+  padding-top: 1.1rem;
+  display: flex; flex-direction: column; gap: 0.75rem;
+}
+.work-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 /* ============================================================
    SKILLS
@@ -700,6 +737,17 @@ strong { color: var(--text); font-weight: 600; }
 .cert-title { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-bottom: 0.18rem; line-height: 1.3; }
 .cert-issuer { font-size: 0.72rem; color: var(--sub); }
 .cert-status.ongoing { color: #2d7a4f; font-weight: 700; }
+
+/* ============================================================
+   RESUME
+   ============================================================ */
+.resume { background: var(--bg); border-top: var(--border-light); }
+
+.resume-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
 
 /* ============================================================
    CONTACT

@@ -93,12 +93,15 @@ if (!typewriterEl) {
 
 const PHRASES = [
   'AI Strategy Leader',
+  'AI Platform Builder',
+  'Product Org Influencer',
   '30 Under 30 Honoree',
   'Enterprise SaaS Expert',
+  'Agentic Systems PM',
   'Growth & Data PM',
   'IIT Kharagpur Alumni',
   'Global Product Leader',
-  'AI Copilot Builder',
+  'AI Copilot Architect',
   'From 0→1 to Millions',
 ];
 
