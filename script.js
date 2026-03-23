@@ -36,28 +36,28 @@ window.addEventListener('scroll', () => {
 const navToggle = document.getElementById('navToggle');
 const navLinks  = document.getElementById('navLinks');
 
-function setMenuOpen(open) {
-  navLinks.classList.toggle('open', open);
-  navToggle.classList.toggle('open', open);
-  navToggle.setAttribute('aria-expanded', String(open));
-}
-
-navToggle.addEventListener('click', () => {
-  setMenuOpen(!navLinks.classList.contains('open'));
-});
-
-// Close menu when a link is clicked
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => setMenuOpen(false));
-});
-
-// Close menu on Escape key
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-    setMenuOpen(false);
-    navToggle.focus();
+if (navToggle && navLinks) {
+  function setMenuOpen(open) {
+    navLinks.classList.toggle('open', open);
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
   }
-});
+
+  navToggle.addEventListener('click', () => {
+    setMenuOpen(!navLinks.classList.contains('open'));
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenuOpen(false));
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+      setMenuOpen(false);
+      navToggle.focus();
+    }
+  });
+}
 
 
 // ============================================================
@@ -86,6 +86,10 @@ fadeElements.forEach(el => fadeObserver.observe(el));
 // ============================================================
 
 const typewriterEl = document.getElementById('typewriter');
+
+if (!typewriterEl) {
+  // Not on the main page — skip typewriter entirely
+} else {
 
 const PHRASES = [
   'AI Strategy Leader',
@@ -136,6 +140,8 @@ function typeStep() {
 
 // Start after a short delay so the page has settled
 setTimeout(typeStep, 900);
+
+} // end typewriter guard
 
 
 // ============================================================

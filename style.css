@@ -543,7 +543,7 @@ strong { color: var(--text); font-weight: 600; }
 
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 
@@ -558,6 +558,25 @@ strong { color: var(--text); font-weight: 600; }
 .work-card:nth-child(1) { background: var(--purple); }
 .work-card:nth-child(2) { background: var(--yellow); }
 .work-card:nth-child(3) { background: var(--peach);  }
+.work-card:nth-child(4) { background: var(--blue);   }
+
+.work-card-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 1.1rem;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--text);
+  border: var(--border);
+  border-radius: var(--pill);
+  padding: 6px 16px;
+  background: rgba(255,255,255,0.65);
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  align-self: flex-start;
+}
+.work-card-link:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: var(--shadow-sm);
+  background: var(--text); color: var(--bg);
+}
 
 .work-featured-badge {
   position: absolute; top: 1.1rem; right: 1.1rem;

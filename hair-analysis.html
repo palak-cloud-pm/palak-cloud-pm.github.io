@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: AI-Powered Hair Health Diagnostic &amp; Recommendation Quiz built end-to-end using Claude Code by Palak Jain, Senior Product Manager." />
+  <title>Hair Health Diagnostic Quiz: Case Study · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Case Study Page Overrides ── */
+    .cs-page-hero {
+      padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      margin-bottom: 2rem;
+      transition: color 0.18s;
+    }
+    .cs-back:hover { color: var(--text); }
+    .cs-back svg { flex-shrink: 0; }
+
+    .cs-hero-meta {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .cs-meta-tag {
+      background: var(--blue);
+      border: var(--border);
+      border-radius: var(--pill);
+      font-size: 0.68rem; font-weight: 700;
+      padding: 3px 12px; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .cs-meta-tag.live {
+      background: var(--green); color: #1a4d2e;
+    }
+
+    .cs-hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.08;
+      margin-bottom: 1.1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .cs-hero-sub {
+      font-size: 1.1rem;
+      max-width: 640px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      color: var(--sub);
+    }
+
+    .cs-quick-stats {
+      display: flex; flex-wrap: wrap; gap: 0;
+      border: var(--border);
+      border-radius: var(--r);
+      background: var(--surface);
+      overflow: hidden;
+      width: fit-content;
+      margin-bottom: 2rem;
+    }
+    .cs-qs {
+      padding: 1rem 1.5rem;
+      border-right: var(--border);
+      text-align: center;
+    }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val {
+      display: block;
+      font-size: 1.25rem; font-weight: 800;
+      color: var(--text); line-height: 1;
+      margin-bottom: 0.2rem; letter-spacing: -0.02em;
+    }
+    .cs-qs-label {
+      font-size: 0.6rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+    }
+
+    .cs-cta-row {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+
+    /* ── Content sections ── */
+    .cs-body {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 3.5rem);
+    }
+
+    .cs-section {
+      padding: 4rem 0;
+      border-top: var(--border-light);
+    }
+
+    .cs-section-num {
+      font-size: 0.6rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      color: var(--muted); margin-bottom: 0.4rem;
+      font-family: 'SFMono-Regular', Menlo, Courier, monospace;
+    }
+
+    .cs-section-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .cs-prose {
+      font-size: 0.97rem;
+      line-height: 1.8;
+      color: var(--sub);
+      max-width: 720px;
+    }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+
+    /* ── Two-column layout ── */
+    .cs-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── Callout card ── */
+    .cs-callout {
+      border: var(--border);
+      border-radius: var(--r);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue   { background: var(--blue); }
+    .cs-callout.green  { background: var(--green); }
+    .cs-callout.peach  { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+
+    .cs-callout-label {
+      font-size: 0.6rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      color: var(--muted); margin-bottom: 0.75rem;
+    }
+    .cs-callout h4 {
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem;
+      text-transform: none; letter-spacing: -0.01em;
+    }
+    .cs-callout p {
+      font-size: 0.83rem; line-height: 1.65; color: var(--sub);
+    }
+
+    /* ── Numbered steps ── */
+    .cs-steps {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .cs-step {
+      border: var(--border);
+      border-radius: var(--r-sm);
+      padding: 1.1rem 1.35rem;
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem; align-items: start;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--blue); }
+    .cs-step:nth-child(2) { background: var(--yellow); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step:nth-child(6) { background: var(--purple); }
+
+    .cs-step-num {
+      font-size: 0.75rem; font-weight: 800;
+      color: var(--text);
+      font-family: 'SFMono-Regular', Menlo, Courier, monospace;
+      padding-top: 0.1rem;
+    }
+    .cs-step-title {
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.25rem;
+    }
+    .cs-step-desc {
+      font-size: 0.8rem; line-height: 1.6; color: var(--sub);
+    }
+
+    /* ── Metric cards ── */
+    .cs-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .cs-metric-card {
+      border: var(--border);
+      border-radius: var(--r);
+      padding: 1.35rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .cs-metric-card:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-metric-card:nth-child(1) { background: var(--blue); }
+    .cs-metric-card:nth-child(2) { background: var(--yellow); }
+    .cs-metric-card:nth-child(3) { background: var(--green); }
+
+    .cs-metric-icon { font-size: 1.5rem; margin-bottom: 0.75rem; line-height: 1; }
+    .cs-metric-name {
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.4rem;
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .cs-metric-desc {
+      font-size: 0.8rem; line-height: 1.6; color: var(--sub);
+    }
+
+    /* ── Tech stack ── */
+    .cs-tech-list {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .cs-tech-tag {
+      background: var(--surface);
+      border: var(--border);
+      border-radius: var(--pill);
+      font-size: 0.76rem; font-weight: 600;
+      padding: 5px 14px; color: var(--text);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+
+    /* ── Quote / pullout ── */
+    .cs-pullout {
+      border-left: 4px solid var(--text);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      background: var(--surface);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    }
+    .cs-pullout p {
+      font-size: 1.05rem; font-weight: 600;
+      color: var(--text); line-height: 1.6;
+    }
+
+    /* ── Learnings list ── */
+    .cs-learnings {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.65rem;
+    }
+    .cs-learnings li {
+      display: flex; gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.9rem; line-height: 1.65; color: var(--sub);
+    }
+    .cs-learnings li::before {
+      content: '→';
+      color: var(--text); font-weight: 700;
+      flex-shrink: 0; font-size: 0.8rem;
+      margin-top: 0.12rem;
+    }
+    .cs-learnings strong { color: var(--text); }
+
+    /* ── Screenshots ── */
+    .cs-screenshots-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .cs-shot {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .cs-shot img {
+      width: 100%;
+      border-radius: 16px;
+      border: var(--border);
+      display: block;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .cs-shot-caption {
+      font-size: 0.72rem;
+      line-height: 1.55;
+      color: var(--sub);
+    }
+
+    @media (max-width: 600px) {
+      .cs-screenshots-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    /* ── Footer CTA ── */
+    .cs-footer-cta {
+      background: var(--yellow);
+      border-top: var(--border);
+      padding: 5rem clamp(1.5rem, 5vw, 3.5rem);
+      text-align: center;
+    }
+    .cs-footer-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 1rem;
+    }
+    .cs-footer-cta p {
+      font-size: 1rem; max-width: 500px;
+      margin: 0 auto 2rem; line-height: 1.7;
+    }
+    .cs-footer-cta .btn-row {
+      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 760px) {
+      .cs-two-col { grid-template-columns: 1fr; }
+      .cs-metrics-grid { grid-template-columns: 1fr; }
+      .cs-quick-stats { width: 100%; }
+      .cs-qs { flex: 1; padding: 0.85rem 0.75rem; }
+      .cs-qs-val { font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .cs-hero-title { font-size: 1.8rem; }
+      .cs-section-title { font-size: 1.4rem; }
+      .cs-cta-row { flex-direction: column; }
+      .cs-cta-row .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag live">Live Product</span>
+        <span class="cs-meta-tag">AI-Native Build</span>
+        <span class="cs-meta-tag">Conversational UX</span>
+        <span class="cs-meta-tag">Mobile-First</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        AI Hair Health Diagnostic<br />&amp; <span class="highlight">Recommendation Quiz</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        A conversational, mobile-first diagnostic tool that identifies a user&rsquo;s hair loss stage from their answers,
+        explains what&rsquo;s causing it, and recommends the right product, putting them one tap away from buying.
+        Built end-to-end using AI-native development.
+      </p>
+
+      <div class="cs-quick-stats fade-in" aria-label="Project quick stats">
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">1 Day</span>
+          <span class="cs-qs-label">Build time</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Mobile</span>
+          <span class="cs-qs-label">Platform</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Live</span>
+          <span class="cs-qs-label">Status</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="https://palak-cloud-pm.github.io/hair-analysis-manmatters/quiz-v3.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Try the Live Quiz
+        </a>
+        <a href="index.html#work" class="btn btn-secondary">
+          &larr; All Projects
+        </a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <!-- ============ THE PROBLEM ============ -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Problem</div>
+        <h2 class="cs-section-title">A universal e-commerce friction: <span class="highlight">which product is for me?</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Health and wellness e-commerce faces a universal challenge: users land on product pages without
+              enough knowledge to self-diagnose their condition. They see a range of products and have no confident
+              way to pick the right one.
+            </p>
+            <p>
+              For hair loss specifically, this friction is acute. Hair thinning exists on a clinical spectrum, from early frontal recession to visible crown loss, and each stage benefits from a different
+              product combination. Showing every user the same generic product page creates confusion, leads to
+              wrong purchases, and causes significant drop-off.
+            </p>
+            <p>
+              The existing path was: user lands on page &rarr; sees multiple stage options &rarr; picks one without
+              guidance &rarr; bounces or buys the wrong thing.
+            </p>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Core Tension</div>
+              <h4>Too many choices, not enough context</h4>
+              <p>Users face a medical self-assessment with no clinical guidance, no confidence, and no clear next step.</p>
+            </div>
+            <div class="cs-callout peach">
+              <div class="cs-callout-label">The Drop-off Point</div>
+              <h4>The stage selection screen</h4>
+              <p>Users asked to self-identify their hair loss stage without any education leads to hesitation, wrong choices, or exits.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ THE OPPORTUNITY ============ -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · Opportunity</div>
+        <h2 class="cs-section-title">Turn the product page into a <span class="highlight">personalised conversation</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.75rem;">
+          <p>
+            The insight was simple: users don&rsquo;t need another dropdown. They need a knowledgeable guide that asks the right questions, explains what&rsquo;s happening, and then tells them exactly what to buy and why.
+          </p>
+          <p>
+            A conversational quiz experience could flip the dynamic entirely. Instead of users trying to
+            self-diagnose from static content, the product walks them through a structured assessment,
+            stages their hair loss from their answers, and delivers a confident, personalised recommendation.
+          </p>
+        </div>
+
+        <div class="cs-pullout">
+          <p>&ldquo;The goal: at the end, the user should know exactly what to buy and why, and be one tap away from doing it.&rdquo;</p>
+        </div>
+
+        <div class="cs-two-col" style="margin-top:1.5rem;">
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Metric 1</div>
+            <h4>Quiz Completion Rate</h4>
+            <p>What % of users who start the quiz finish it. Designed against drop-off with progressive disclosure, one question at a time, and a conversational tone.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Metric 2</div>
+            <h4>Post-Quiz Purchase Conversion</h4>
+            <p>What % of completers add to cart or buy. Driven by confidence in the recommendation: personalised reasoning, stage explanation, and a clear, single CTA.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WHAT I BUILT ============ -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · What I Built</div>
+        <h2 class="cs-section-title">A conversational diagnostic, <span class="highlight">end-to-end</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:2rem;">
+          <p>
+            The quiz is a mobile-first, single-page web app with a fully dynamic recommendation engine.
+            Every screen, question, and result is designed to reduce friction and increase confidence.
+          </p>
+        </div>
+
+        <div class="cs-steps">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Conversational question flow</div>
+              <div class="cs-step-desc">Multi-step quiz with one question visible at a time. No long forms. Progressive disclosure keeps users moving forward without overwhelm.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Dynamic hair loss staging</div>
+              <div class="cs-step-desc">Answers feed into a scoring algorithm that maps users to their hair loss stage (Stage 2–5). No static hardcoding: the stage is computed from responses.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Stage education &amp; cause explanation</div>
+              <div class="cs-step-desc">Before the recommendation, users see what stage they&rsquo;re at and why their hair is thinning. This builds the trust needed to act on the recommendation.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">Personalised kit recommendation</div>
+              <div class="cs-step-desc">Each stage maps to a specific product kit with a personalised explanation of why this kit is right for them, not a generic product description.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">One-tap buy CTA</div>
+              <div class="cs-step-desc">The result screen ends with a single, clear call-to-action. No distractions, no navigation away. User is one tap from purchase at peak confidence.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">06</div>
+            <div>
+              <div class="cs-step-title">Mobile-first, fast-loading</div>
+              <div class="cs-step-desc">Single-page HTML/CSS/JS with no frameworks or heavy dependencies. Loads instantly on mobile. Tested end-to-end on phone before shipping.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SCREENSHOTS ============ -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03b · Product Screens</div>
+        <h2 class="cs-section-title">The experience, <span class="highlight">screen by screen</span></h2>
+
+        <div class="cs-screenshots-row">
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/home.jpeg" alt="Quiz home screen" />
+            <p class="cs-shot-caption">Clear problem framing before question one reduces uncertainty and anchors the user's intent to complete.</p>
+          </div>
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/quiz1.jpeg" alt="Quiz question 1" />
+            <p class="cs-shot-caption">One question at a time lowers cognitive load, directly improving quiz completion rate.</p>
+          </div>
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/quiz2.jpeg" alt="Quiz question 2" />
+            <p class="cs-shot-caption">Each answer builds the diagnostic picture, so users feel heard, not interrogated.</p>
+          </div>
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/fact.jpeg" alt="Fact interstitial screen" />
+            <p class="cs-shot-caption">Educational interstitials build trust mid-quiz and prime the user to accept the recommendation.</p>
+          </div>
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/result1.jpeg" alt="Result screen — stage diagnosis" />
+            <p class="cs-shot-caption">Naming the user's stage creates an 'aha' moment: they feel diagnosed, not sold to.</p>
+          </div>
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/result2.png" alt="Result screen — cause explanation" />
+            <p class="cs-shot-caption">Explaining the cause links their symptom to science, building the confidence needed to act.</p>
+          </div>
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/result3.png" alt="Result screen — product recommendation" />
+            <p class="cs-shot-caption">Personalised recommendation with specific reasoning removes the last doubt before purchase.</p>
+          </div>
+
+          <div class="cs-shot fade-in">
+            <img src="screenshots/result4.png" alt="Result screen — CTA" />
+            <p class="cs-shot-caption">Single CTA at peak confidence: one tap from purchase with zero competing distractions.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============ HOW I BUILT IT ============ -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · How I Built It</div>
+        <h2 class="cs-section-title">AI-native development: <span class="highlight">PM + Claude Code = shipped product</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              This project is a demonstration of what AI-native product development looks like in practice.
+              I went from brief to deployed product solo, without a developer, designer, or agency.
+            </p>
+            <p>
+              I used <strong>Claude Code</strong> as my development partner throughout. The workflow was
+              iterative: define the problem and spec, prompt for the implementation, review and test,
+              then iterate on UX and logic together. Every question, screen, and algorithm was shaped
+              through this loop.
+            </p>
+            <p>
+              The recommendation engine, mapping user answers to hair loss stages and then to
+              specific product kits, was designed as a PM problem first (what signals predict stage?)
+              and then implemented through AI-assisted code.
+            </p>
+            <p>
+              There was no design-to-dev handoff. No sprint planning. No dependency on an engineering team.
+              The product was specced, built, iterated, and deployed in days.
+            </p>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout blue">
+              <div class="cs-callout-label">The Build Stack</div>
+              <h4>Intentionally lightweight</h4>
+              <p>HTML, CSS, and vanilla JS with no framework overhead. Chosen for speed, portability, and zero build-step deployment to GitHub Pages.</p>
+            </div>
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The PM Role</div>
+              <h4>Spec &rarr; Prompt &rarr; Test &rarr; Ship</h4>
+              <p>I authored the quiz logic, UX decisions, recommendation framework, and copy. Claude Code wrote and iterated the implementation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">Claude Code</span>
+          <span class="cs-tech-tag">HTML / CSS / JS</span>
+          <span class="cs-tech-tag">GitHub Pages</span>
+          <span class="cs-tech-tag">Prompt Engineering</span>
+          <span class="cs-tech-tag">Scoring Algorithm Design</span>
+          <span class="cs-tech-tag">Conversational UX</span>
+          <span class="cs-tech-tag">Mobile-First</span>
+          <span class="cs-tech-tag">Zero-to-deploy</span>
+        </div>
+      </section>
+
+      <!-- ============ METRICS DESIGN ============ -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">05 · Metrics &amp; Design Decisions</div>
+        <h2 class="cs-section-title">Every decision traced back to <span class="highlight">two metrics</span></h2>
+
+        <div class="cs-metrics-grid" style="margin-bottom:2rem;">
+          <div class="cs-metric-card fade-in">
+            <div class="cs-metric-icon">📊</div>
+            <div class="cs-metric-name">Quiz Completion Rate</div>
+            <div class="cs-metric-desc">
+              One question at a time (reduces cognitive load), progress bar (shows how close to done),
+              conversational tone (feels guided, not interrogated), no back-button anxiety (linear flow).
+            </div>
+          </div>
+          <div class="cs-metric-card fade-in">
+            <div class="cs-metric-icon">🛒</div>
+            <div class="cs-metric-name">Post-Quiz Conversion</div>
+            <div class="cs-metric-desc">
+              Personalised reasoning on result screen (not generic copy), stage education before recommendation
+              (builds trust), single CTA (no distraction), social proof via efficacy data.
+            </div>
+          </div>
+          <div class="cs-metric-card fade-in">
+            <div class="cs-metric-icon">📱</div>
+            <div class="cs-metric-name">Mobile Performance</div>
+            <div class="cs-metric-desc">
+              No framework, no build step, no unnecessary assets. Single HTML file loads instantly.
+              Touch-optimised tap targets. Tested on real phone before considering it done.
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-callout purple">
+          <div class="cs-callout-label">PM Principle Applied</div>
+          <h4>Metric-first feature design</h4>
+          <p>Before writing a single line of code, I defined the two metrics that mattered. Then worked backwards: what UX decisions improve completion rate? What builds enough confidence to convert? Every feature either served a metric or was cut.</p>
+        </div>
+      </section>
+
+      <!-- ============ WHAT THIS SHOWS ============ -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">06 · Reflection</div>
+        <h2 class="cs-section-title">What this project <span class="highlight">demonstrates</span></h2>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li>
+            <span><strong>AI-native PM execution:</strong> I can ideate, spec, build, and deploy a live product solo without an engineering team, using AI tools as a force multiplier. This is a fundamentally different speed and capability for a PM.</span>
+          </li>
+          <li>
+            <span><strong>Product thinking from first principles:</strong> I framed the problem (friction on a product page), identified the right success metrics (completion rate &amp; conversion), and designed backwards from them, not from what was technically easiest.</span>
+          </li>
+          <li>
+            <span><strong>Conversational UX design:</strong> The quiz is designed to feel like a conversation, not a form. This is a deliberate UX decision tied directly to completion rate: the experience should feel guided, not interrogated.</span>
+          </li>
+          <li>
+            <span><strong>Trust architecture:</strong> The result screen isn&rsquo;t just a recommendation. It&rsquo;s a confidence-builder. Stage education &rarr; cause explanation &rarr; personalised recommendation &rarr; CTA. Each step earns the right to ask the user to buy.</span>
+          </li>
+          <li>
+            <span><strong>Shipping over decks:</strong> The brief asked for a live, deployed, testable product, not a prototype or presentation. I shipped a live URL. This is what AI-native product building makes possible.</span>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- ============ FOOTER CTA ============ -->
+    <div class="cs-footer-cta">
+      <h2>Try it on your phone</h2>
+      <p>The quiz is live and mobile-optimised. Take the full diagnostic end-to-end and see the recommendation engine in action.</p>
+      <div class="btn-row">
+        <a href="https://palak-cloud-pm.github.io/hair-analysis-manmatters/quiz-v3.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open Live Quiz
+        </a>
+        <a href="index.html#contact" class="btn btn-secondary btn-lg">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2025 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; London, UK</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
