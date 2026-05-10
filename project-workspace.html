@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: MCP Workspace Automation Agent — built by Palak Jain, Senior Product Manager." />
+  <title>MCP Workspace Automation Agent: Case Study · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #eef8f5; }
+    .cs-page-hero { padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem; max-width: 1080px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 2rem; transition: color 0.18s; }
+    .cs-back:hover { color: var(--text); }
+    .cs-hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .cs-meta-tag { background: var(--sage); border: var(--border); border-radius: var(--pill); font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cs-hero-title { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.08; margin-bottom: 1.1rem; letter-spacing: -0.03em; }
+    .cs-hero-sub { font-size: 1.1rem; max-width: 640px; line-height: 1.75; margin-bottom: 2.5rem; color: var(--sub); }
+    .cs-quick-stats { display: flex; flex-wrap: wrap; gap: 0; border: var(--border); border-radius: var(--r); background: var(--surface); overflow: hidden; width: fit-content; margin-bottom: 2rem; }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue   { background: var(--blue); }
+    .cs-callout.green  { background: var(--green); }
+    .cs-callout.peach  { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout.pink   { background: var(--pink); }
+    .cs-callout.sage   { background: var(--sage); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--yellow); }
+    .cs-step:nth-child(2) { background: var(--blue); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-footer-cta { background: var(--sage); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 760px) { .cs-two-col { grid-template-columns: 1fr; } .cs-quick-stats { width: 100%; } .cs-qs { flex: 1; padding: 0.85rem 0.75rem; } }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag">MCP</span>
+        <span class="cs-meta-tag">OpenAI</span>
+        <span class="cs-meta-tag">Streamlit</span>
+        <span class="cs-meta-tag">AI Agents</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        MCP Workspace<br /><span class="highlight">Automation Agent</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        An agentic system that connects Jira, Slack, and Notion via Model Context Protocol, allowing a single natural language prompt to trigger coordinated actions across all three tools simultaneously, with full real-time logging.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">MCP</span>
+          <span class="cs-qs-label">Protocol</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">3 Tools</span>
+          <span class="cs-qs-label">Orchestrated</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">GPT-4o</span>
+          <span class="cs-qs-label">Agent Loop</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <div class="cs-project-img-row fade-in">
+        <img src="projects/6-workspace-buddy-architecture.png" alt="MCP Workspace Buddy agent architecture" class="cs-project-img" style="margin:0;" loading="lazy">
+        <img src="projects/6-workspace-buddy-screenshot.png" alt="MCP Workspace Buddy screenshot" class="cs-project-img" style="margin:0;" loading="lazy">
+      </div>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Problem</div>
+        <h2 class="cs-section-title">Context-switching is <span class="highlight">the real PM tax</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Product managers live across three or more tools simultaneously: Jira for tickets and sprints, Slack for team communication, Notion for specs and decision logs. Every context switch costs time and breaks flow.
+            </p>
+            <p>
+              Worse, actions that span tools require manual re-entry of the same context. Creating a Jira ticket, then posting an update to Slack about it, then logging the decision in Notion are three separate operations, done manually, from the same piece of information.
+            </p>
+            <p>
+              MCP (Model Context Protocol) changes this model. Instead of context-switching between tools, a single agent can issue instructions across all of them from one prompt, with full orchestration and logging.
+            </p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Daily Tax</div>
+              <h4>Three tools, three separate context loads</h4>
+              <p>Opening Jira, finding the right project, updating the ticket, switching to Slack, writing the update, switching to Notion, finding the right page. This is a 10-minute job that should take 10 seconds.</p>
+            </div>
+            <div class="cs-callout blue">
+              <div class="cs-callout-label">Why MCP Changes This</div>
+              <h4>Standardised tool interfaces enable agent orchestration</h4>
+              <p>MCP provides a standardised way for LLMs to call tools. Products built on MCP are composable by design, not by custom integration effort.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · Architecture</div>
+        <h2 class="cs-section-title">How the agent <span class="highlight">orchestrates across tools</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.5rem;">
+          <p>
+            The agent receives a natural language prompt, determines which tools to call and in what sequence, executes the actions via MCPManager stdio transport, and logs every step in real time via Streamlit.
+          </p>
+        </div>
+
+
+        <div class="cs-steps" style="margin-top:2rem;">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Prompt parsing and intent resolution</div>
+              <div class="cs-step-desc">GPT-4o receives the natural language prompt and determines the required actions across tools. It decides which tools to call, in what order, and what parameters to pass.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">MCPManager tool routing via stdio</div>
+              <div class="cs-step-desc">MCPManager handles the transport layer between the agent and each connected tool via stdio. Each tool (Jira, Slack, Notion) is registered as an MCP server with a standardised interface.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Parallel and sequential tool calls</div>
+              <div class="cs-step-desc">The agent determines whether actions should be sequential (create ticket, then post to Slack about it) or parallel (update Notion and Slack simultaneously). This sequencing logic is part of the agent's reasoning.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">Real-time Streamlit activity log</div>
+              <div class="cs-step-desc">Every tool call, parameter, and result is streamed to a Streamlit interface. The user sees the agent's decision chain in real time, including which tool was called, what was sent, and what came back.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">Completion summary</div>
+              <div class="cs-step-desc">Once all tool calls complete, the agent produces a plain-language summary of what was done. This is the visible output the user receives alongside the detailed activity log.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-pullout" style="margin-top:2rem;">
+          <p>&ldquo;MCP doesn't just automate tool calls. It standardises the interface so any agent can compose across any set of compliant tools. The integration work moves from the product team to the protocol.&rdquo;</p>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · Product Learnings</div>
+        <h2 class="cs-section-title">What building on MCP <span class="highlight">actually teaches you</span></h2>
+
+        <div class="cs-two-col" style="margin-bottom:2rem;">
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Protocol insight</div>
+            <h4>Standardised interfaces make agents composable</h4>
+            <p>Custom function-calling integrations are brittle. MCP-compliant tools can be swapped, added, or removed without rewriting the agent. This is a product architecture advantage, not just a technical one.</p>
+          </div>
+          <div class="cs-callout purple">
+            <div class="cs-callout-label">Transparency insight</div>
+            <h4>Real-time logging is a trust feature</h4>
+            <p>Showing every tool call as it happens transforms the agent from a black box to a legible collaborator. Users correct course earlier when they can see what's happening.</p>
+          </div>
+        </div>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li><span><strong>Sequencing logic is a product decision:</strong> Deciding when to call tools in parallel vs. sequence affects both performance and correctness. This isn't engineering, it's product scoping of the agent's behaviour.</span></li>
+          <li><span><strong>Failure handling must be explicit:</strong> If a Jira API call fails mid-workflow, what does the agent do with the Slack update it already sent? Rollback semantics are a design requirement.</span></li>
+          <li><span><strong>The prompt interface is the product:</strong> The quality of the natural language prompt determines what the agent does. Prompt design is UX design. Bad prompt patterns produce inconsistent outcomes.</span></li>
+          <li><span><strong>MCP accelerates future integrations:</strong> Adding a fourth tool to an MCP-based system is significantly faster than adding it to a custom function-calling setup. The investment in protocol compliance pays forward.</span></li>
+        </ul>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · Tech Stack</div>
+        <h2 class="cs-section-title">Built with</h2>
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">MCP (Model Context Protocol)</span>
+          <span class="cs-tech-tag">MCPManager</span>
+          <span class="cs-tech-tag">GPT-4o</span>
+          <span class="cs-tech-tag">OpenAI</span>
+          <span class="cs-tech-tag">Jira API</span>
+          <span class="cs-tech-tag">Slack API</span>
+          <span class="cs-tech-tag">Notion API</span>
+          <span class="cs-tech-tag">Python</span>
+          <span class="cs-tech-tag">Streamlit</span>
+          <span class="cs-tech-tag">Agentic Orchestration</span>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Interested in agentic systems and MCP?</h2>
+      <p>See the autonomous job search agent for another take on multi-step AI orchestration.</p>
+      <div class="btn-row">
+        <a href="project-job-search.html" class="btn btn-primary">Job Search Agent Case Study</a>
+        <a href="index.html#work" class="btn btn-secondary">All Projects</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

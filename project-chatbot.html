@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: Modular AI Chatbot Platform — a progression of conversational AI builds by Palak Jain, Senior Product Manager." />
+  <title>Modular AI Chatbot Platform: Case Study · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #f0ecff; }
+    .cs-page-hero {
+      padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      margin-bottom: 2rem;
+      transition: color 0.18s;
+    }
+    .cs-back:hover { color: var(--text); }
+    .cs-hero-meta {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .cs-meta-tag {
+      background: var(--purple);
+      border: var(--border); border-radius: var(--pill);
+      font-size: 0.68rem; font-weight: 700;
+      padding: 3px 12px; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .cs-hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.08; margin-bottom: 1.1rem;
+      letter-spacing: -0.03em;
+    }
+    .cs-hero-sub {
+      font-size: 1.1rem; max-width: 640px;
+      line-height: 1.75; margin-bottom: 2.5rem; color: var(--sub);
+    }
+    .cs-quick-stats {
+      display: flex; flex-wrap: wrap; gap: 0;
+      border: var(--border); border-radius: var(--r);
+      background: var(--surface); overflow: hidden;
+      width: fit-content; margin-bottom: 2rem;
+    }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue   { background: var(--blue); }
+    .cs-callout.green  { background: var(--green); }
+    .cs-callout.peach  { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout.pink   { background: var(--pink); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--blue); }
+    .cs-step:nth-child(2) { background: var(--yellow); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-footer-cta { background: var(--purple); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 760px) { .cs-two-col { grid-template-columns: 1fr; } .cs-quick-stats { width: 100%; } .cs-qs { flex: 1; padding: 0.85rem 0.75rem; } }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag">Conversational AI</span>
+        <span class="cs-meta-tag">RAG</span>
+        <span class="cs-meta-tag">OpenAI</span>
+        <span class="cs-meta-tag">Python</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        Modular AI <span class="highlight">Chatbot Platform</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        A progression of chatbot builds that moved from basic prompt-response to full database integration
+        and RAG-powered retrieval , each iteration adding a distinct product capability and uncovering
+        the real engineering tradeoffs that shape AI product decisions.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">5</span>
+          <span class="cs-qs-label">Iterations</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">RAG</span>
+          <span class="cs-qs-label">Architecture</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">OpenAI</span>
+          <span class="cs-qs-label">Stack</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <div class="cs-project-img-row fade-in">
+        <img src="projects/1-modular-ai-chatbot-platform-architecture.png" alt="Modular AI Chatbot Platform architecture diagram" class="cs-project-img" style="margin:0;" loading="lazy">
+        <img src="projects/1-modular-ai-chatbot-platform-screenshot.png" alt="Modular AI Chatbot Platform screenshot" class="cs-project-img" style="margin:0;" loading="lazy">
+      </div>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Problem</div>
+        <h2 class="cs-section-title">Understanding conversational AI from the <span class="highlight">inside out</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Most PMs working on AI products are one layer removed from the implementation. They understand what LLMs can do in concept, but not the engineering tradeoffs that determine what gets shipped and what doesn&rsquo;t.
+            </p>
+            <p>
+              To make better product decisions on AI features , scoping, prioritisation, evaluation criteria , I needed direct experience building conversational AI systems at increasing levels of complexity.
+            </p>
+            <p>
+              The goal wasn&rsquo;t to become an engineer. It was to understand the product surface deeply enough to write better specs, ask better questions, and know which tradeoffs matter.
+            </p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Core Question</div>
+              <h4>What does each layer of AI capability actually cost?</h4>
+              <p>From basic prompt-response to tool-calling to RAG-backed database queries , what changes at each step, and why does it matter for product decisions?</p>
+            </div>
+            <div class="cs-callout peach">
+              <div class="cs-callout-label">The PM Stake</div>
+              <h4>Better specs come from better understanding</h4>
+              <p>A PM who has built a RAG system writes fundamentally different requirements for one than a PM who hasn&rsquo;t.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · What I Built</div>
+        <h2 class="cs-section-title">Five iterations, <span class="highlight">five capability milestones</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:2rem;">
+          <p>
+            Each version of the chatbot added a distinct capability layer. The progression wasn&rsquo;t about making it smarter , it was about understanding what each architectural decision unlocks and what it costs.
+          </p>
+        </div>
+
+        <div class="cs-steps">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Basic OpenAI integration</div>
+              <div class="cs-step-desc">Simple prompt &rarr; response loop with Streamlit frontend. Baseline for understanding API patterns, latency, and cost structure. No memory, no tools.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Conversation memory</div>
+              <div class="cs-step-desc">Added message history to maintain context across turns. Key learning: managing token windows and deciding what to keep vs. truncate is a product decision, not a technical one.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Tool / function calling</div>
+              <div class="cs-step-desc">Integrated weather tool and multi-tool orchestration. Learned how the model decides when to call a tool, how to handle tool failures gracefully, and how tool schemas shape model behaviour.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">AI personality &amp; system prompting</div>
+              <div class="cs-step-desc">Explored how system prompts define tone, guardrails, and persona. The insight: system prompt design is product design , the model&rsquo;s character is a product decision.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">Database connectivity &amp; user search</div>
+              <div class="cs-step-desc">Connected chatbot to a live database for user-specific queries. Added RAG-powered retrieval for accurate, personalised responses. This is where the product complexity becomes real.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02b · Architecture</div>
+        <h2 class="cs-section-title">Final architecture: <span class="highlight">RAG pipeline</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.5rem;">
+          <p>By iteration 5, the chatbot runs a full RAG pipeline. Each user query flows through retrieval before reaching the LLM, grounding every response in actual database content.</p>
+        </div>
+
+
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · Key Learnings</div>
+        <h2 class="cs-section-title">What building taught me about <span class="highlight">product decisions</span></h2>
+
+        <div class="cs-pullout">
+          <p>&ldquo;Every architectural choice in an AI system is a product tradeoff. You can&rsquo;t make good tradeoffs without understanding what each choice costs.&rdquo;</p>
+        </div>
+
+        <div class="cs-two-col" style="margin-top:1.5rem;">
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Evaluation insight</div>
+            <h4>Correctness is harder to define than it looks</h4>
+            <p>At iteration 1, &ldquo;correct&rdquo; was obvious. By iteration 5, defining what a good answer looks like required explicit product thinking , not just engineering checks.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Scope insight</div>
+            <h4>Tool-calling changes the PM surface dramatically</h4>
+            <p>Once tools are involved, the product surface expands: error states, fallbacks, transparency to the user, and trust all become live design questions.</p>
+          </div>
+        </div>
+
+        <ul class="cs-learnings" style="margin-top:2rem; max-width:720px;">
+          <li><span><strong>RAG is a product design problem:</strong> The corpus quality, taxonomy, and versioning strategy are product decisions. The embedding model is almost irrelevant by comparison.</span></li>
+          <li><span><strong>Memory is always a tradeoff:</strong> More context = better answers and higher cost. Deciding what to remember is a product call, not an engineering one.</span></li>
+          <li><span><strong>System prompts are specs:</strong> Writing a good system prompt is the same skill as writing a good PRD , precision, scope, and edge case handling matter.</span></li>
+          <li><span><strong>Tool failure paths are features:</strong> How the product behaves when a tool call fails is as important as how it behaves when it succeeds.</span></li>
+        </ul>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · Tech Stack</div>
+        <h2 class="cs-section-title">Built with</h2>
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">OpenAI API</span>
+          <span class="cs-tech-tag">Streamlit</span>
+          <span class="cs-tech-tag">Python</span>
+          <span class="cs-tech-tag">RAG</span>
+          <span class="cs-tech-tag">Function Calling</span>
+          <span class="cs-tech-tag">Prompt Engineering</span>
+          <span class="cs-tech-tag">Conversation History Management</span>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Want to talk AI product strategy?</h2>
+      <p>I&rsquo;m always happy to discuss evaluation design, RAG architecture, or what it takes to ship real AI products.</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn btn-primary btn-lg">Get in Touch</a>
+        <a href="index.html#work" class="btn btn-secondary btn-lg">&larr; All Projects</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

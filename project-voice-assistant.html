@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: Voice Assistant with Persistent Memory — phone-based AI voice system built by Palak Jain, Senior Product Manager." />
+  <title>Voice Assistant with Persistent Memory: Case Study · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #fffbdd; }
+    .cs-page-hero { padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem; max-width: 1080px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 2rem; transition: color 0.18s; }
+    .cs-back:hover { color: var(--text); }
+    .cs-hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .cs-meta-tag { background: var(--yellow); border: var(--border); border-radius: var(--pill); font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cs-meta-tag.featured { background: var(--green); color: #1a4d2e; }
+    .cs-hero-title { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.08; margin-bottom: 1.1rem; letter-spacing: -0.03em; }
+    .cs-hero-sub { font-size: 1.1rem; max-width: 640px; line-height: 1.75; margin-bottom: 2.5rem; color: var(--sub); }
+    .cs-quick-stats { display: flex; flex-wrap: wrap; gap: 0; border: var(--border); border-radius: var(--r); background: var(--surface); overflow: hidden; width: fit-content; margin-bottom: 2rem; }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue { background: var(--blue); }
+    .cs-callout.green { background: var(--green); }
+    .cs-callout.peach { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout.pink { background: var(--pink); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--yellow); }
+    .cs-step:nth-child(2) { background: var(--blue); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-footer-cta { background: var(--yellow); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 760px) { .cs-two-col { grid-template-columns: 1fr; } .cs-quick-stats { width: 100%; } .cs-qs { flex: 1; padding: 0.85rem 0.75rem; } }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag featured">Featured</span>
+        <span class="cs-meta-tag">Voice AI</span>
+        <span class="cs-meta-tag">Twilio</span>
+        <span class="cs-meta-tag">ElevenLabs</span>
+        <span class="cs-meta-tag">Webhook</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        AI Voice Assistant<br />with <span class="highlight">Persistent Memory</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        A phone-based AI voice assistant that remembers context across calls , built to demonstrate how
+        stateful conversational AI architecture works and what it means for product design when your AI
+        can recall the previous conversation.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">Phone</span>
+          <span class="cs-qs-label">Interface</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Stateful</span>
+          <span class="cs-qs-label">Memory</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Webhook</span>
+          <span class="cs-qs-label">Architecture</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <img src="projects/3-voice-assistant-architecture.png" alt="Voice Assistant call flow architecture diagram" class="cs-project-img fade-in" loading="lazy" style="margin-top:0;">
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Problem</div>
+        <h2 class="cs-section-title">High call volumes and <span class="highlight">no memory between them</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Support teams face a dual problem: high inbound call volumes overwhelm agents, and every call starts from zero , the system has no memory of what was discussed last time. Users repeat themselves. Agents re-verify context. Resolution takes longer than it should.
+            </p>
+            <p>
+              Voice AI can deflect routine calls. But stateless voice AI creates its own frustration: a caller who spoke to the AI last week has to re-explain everything. The experience feels broken, not intelligent.
+            </p>
+            <p>
+              The real product problem was persistence: could a voice AI system retain context across multiple phone interactions, so repeat callers feel genuinely remembered?
+            </p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Core Tension</div>
+              <h4>Voice AI without memory isn&rsquo;t truly helpful</h4>
+              <p>Deflection rate is the wrong metric. The right metric is: does the caller feel that the AI understood their situation, including what happened last time?</p>
+            </div>
+            <div class="cs-callout pink">
+              <div class="cs-callout-label">The Design Hypothesis</div>
+              <h4>Memory changes the product experience fundamentally</h4>
+              <p>An AI that remembers you across calls isn&rsquo;t just more efficient , it&rsquo;s qualitatively different. Trust is built across sessions, not within them.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · Architecture</div>
+        <h2 class="cs-section-title">How persistent memory <span class="highlight">actually works</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.5rem;">
+          <p>
+            The core challenge was that phone calls are stateless by nature. Each Twilio webhook is a new HTTP request with no inherent memory of prior sessions. The architecture had to explicitly solve for persistence.
+          </p>
+        </div>
+
+        <img src="projects/3-voice-assistant-architecture.png" alt="Voice Assistant call flow architecture diagram" class="cs-project-img fade-in" loading="lazy">
+
+        <div class="cs-steps">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Twilio receives the inbound call</div>
+              <div class="cs-step-desc">Twilio handles phone connectivity and fires a webhook to the Flask backend with the caller&rsquo;s number and call metadata at call initiation.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Backend retrieves conversation history</div>
+              <div class="cs-step-desc">Flask queries file-based storage for the caller&rsquo;s conversation history using their phone number as key. If a prior session exists, it&rsquo;s loaded into the LLM context window.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">ElevenLabs generates voice response</div>
+              <div class="cs-step-desc">The LLM&rsquo;s text response is passed to ElevenLabs for voice synthesis. The voice model is consistent across sessions , the caller hears the same &ldquo;person&rdquo; they spoke to last time.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">Conversation saved at call end</div>
+              <div class="cs-step-desc">When the call ends, the full conversation is persisted to storage. The next call from this number picks up where this one left off.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-pullout" style="margin-top:2rem;">
+          <p>&ldquo;The memory architecture is the product. The voice is the interface. The two are easy to conflate, but they&rsquo;re entirely separate design decisions.&rdquo;</p>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · Product Learnings</div>
+        <h2 class="cs-section-title">What this taught me about <span class="highlight">voice product design</span></h2>
+
+        <div class="cs-two-col" style="margin-bottom:2rem;">
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Trust insight</div>
+            <h4>Memory is the trust mechanism</h4>
+            <p>In text-based AI, users can re-read responses and verify. In voice, trust is built through familiarity and recall. An AI that remembers you feels trustworthy in a qualitatively different way.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Handoff insight</div>
+            <h4>The handoff moment is the hardest design problem</h4>
+            <p>When should the AI escalate to a human? Getting this wrong in voice is more costly than in chat , the caller has already invested time in a phone call. The handoff has to be warm, not abrupt.</p>
+          </div>
+        </div>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li><span><strong>Webhook architecture changes everything:</strong> Phone AI isn&rsquo;t a chatbot with audio. It&rsquo;s a fundamentally different integration model. Every latency decision becomes audible.</span></li>
+          <li><span><strong>Voice UX has different constraints:</strong> No screen, no re-reading, no undo. The conversation design has to be clearer and more direct than text-based equivalents.</span></li>
+          <li><span><strong>Storage strategy is a product decision:</strong> What to retain, what to summarise, what to discard after N sessions , these are product choices with real user experience implications.</span></li>
+          <li><span><strong>Latency is felt, not seen:</strong> A 3-second response delay in chat is mildly annoying. On a phone call, it&rsquo;s deeply uncomfortable. Optimising for time-to-first-token is a product requirement, not an engineering nice-to-have.</span></li>
+        </ul>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · Tech Stack</div>
+        <h2 class="cs-section-title">Built with</h2>
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">Twilio</span>
+          <span class="cs-tech-tag">ElevenLabs</span>
+          <span class="cs-tech-tag">Flask</span>
+          <span class="cs-tech-tag">Python</span>
+          <span class="cs-tech-tag">Webhook Architecture</span>
+          <span class="cs-tech-tag">File-based Storage</span>
+          <span class="cs-tech-tag">Conversational UX</span>
+          <span class="cs-tech-tag">Voice AI</span>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Interested in voice AI products?</h2>
+      <p>I&rsquo;ve worked across conversational AI, voice systems, and agentic workflows. Let&rsquo;s talk about what you&rsquo;re building.</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn btn-primary btn-lg">Get in Touch</a>
+        <a href="index.html#work" class="btn btn-secondary btn-lg">&larr; All Projects</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

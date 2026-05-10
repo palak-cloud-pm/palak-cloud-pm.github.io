@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: Autonomous AI Agent for Job Search — built by Palak Jain, Senior Product Manager." />
+  <title>Autonomous Job Search AI Agent: Case Study · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #fff5ed; }
+    .cs-page-hero { padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem; max-width: 1080px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 2rem; transition: color 0.18s; }
+    .cs-back:hover { color: var(--text); }
+    .cs-hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .cs-meta-tag { background: var(--peach); border: var(--border); border-radius: var(--pill); font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cs-hero-title { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.08; margin-bottom: 1.1rem; letter-spacing: -0.03em; }
+    .cs-hero-sub { font-size: 1.1rem; max-width: 640px; line-height: 1.75; margin-bottom: 2.5rem; color: var(--sub); }
+    .cs-quick-stats { display: flex; flex-wrap: wrap; gap: 0; border: var(--border); border-radius: var(--r); background: var(--surface); overflow: hidden; width: fit-content; margin-bottom: 2rem; }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue { background: var(--blue); }
+    .cs-callout.green { background: var(--green); }
+    .cs-callout.peach { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--blue); }
+    .cs-step:nth-child(2) { background: var(--yellow); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-footer-cta { background: var(--peach); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 760px) { .cs-two-col { grid-template-columns: 1fr; } .cs-quick-stats { width: 100%; } .cs-qs { flex: 1; padding: 0.85rem 0.75rem; } }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag">Autonomous Agent</span>
+        <span class="cs-meta-tag">MCP</span>
+        <span class="cs-meta-tag">A2A Protocols</span>
+        <span class="cs-meta-tag">OpenAI</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        Autonomous AI Agent<br />for <span class="highlight">Job Search</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        A multi-step agentic system that searches job boards, scrapes and analyses listings, evaluates
+        candidate fit, and sends personalised summaries , end-to-end, without human input. Built to
+        understand what real agentic autonomy looks like in practice.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">5+</span>
+          <span class="cs-qs-label">Tools Called</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">MCP</span>
+          <span class="cs-qs-label">Protocol</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Zero</span>
+          <span class="cs-qs-label">Human Input</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <div class="cs-project-img-row fade-in">
+        <img src="projects/5-autonomous-job-search-agent-architecture.png" alt="Autonomous Job Search Agent architecture diagram" class="cs-project-img" style="margin:0;" loading="lazy">
+        <img src="projects/5-autonomous-job-search-agent-screenshot.png" alt="Autonomous Job Search Agent screenshot" class="cs-project-img" style="margin:0;" loading="lazy">
+      </div>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Problem</div>
+        <h2 class="cs-section-title">Job search is <span class="highlight">broken by repetition</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Job seekers spend hours each week on the same repetitive loop: search job boards, scan listings, assess fit, shortlist, apply, repeat. The process is high-effort, low-signal, and deeply manual.
+            </p>
+            <p>
+              The match quality is poor because humans anchor on keywords, not semantic fit. A job that&rsquo;s 90% right but uses different terminology gets missed. A job that sounds right but doesn&rsquo;t match the candidate&rsquo;s actual experience gets applied to anyway.
+            </p>
+            <p>
+              The opportunity: an autonomous agent that understands the candidate at a semantic level and runs the search, evaluation, and alerting loop without human involvement.
+            </p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Core Waste</div>
+              <h4>Manual effort on low-value tasks</h4>
+              <p>Searching and scanning are the least valuable parts of job hunting. Human time should go to applications and interviews , not curation.</p>
+            </div>
+            <div class="cs-callout purple">
+              <div class="cs-callout-label">The Match Problem</div>
+              <h4>Keyword matching misses semantic fit</h4>
+              <p>Traditional search is keyword-based. Semantic matching understands what a candidate actually does, not just what words appear on their CV.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · How the Agent Works</div>
+        <h2 class="cs-section-title">Multi-step autonomy, <span class="highlight">end to end</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.5rem;">
+          <p>
+            The agent runs a full job search workflow using OpenAI function calling with custom tools. At each step, it decides which tool to call, what parameters to pass, and when it has enough information to proceed or stop.
+          </p>
+        </div>
+
+
+        <div class="cs-steps">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Resume parsing</div>
+              <div class="cs-step-desc">Parses the uploaded CV to extract skills, experience, seniority, and preferences. This forms the semantic profile used for matching throughout the workflow.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Web search for job listings</div>
+              <div class="cs-step-desc">Searches job boards using queries derived from the candidate profile. The agent decides search terms, not the user. This is where semantic understanding starts to matter.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Scraping and content analysis</div>
+              <div class="cs-step-desc">Scrapes each listing URL and analyses the full job description , requirements, responsibilities, company context. Not just the title and keywords.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">Fit evaluation and scoring</div>
+              <div class="cs-step-desc">Evaluates each role against the candidate&rsquo;s profile semantically. Produces a fit score and a brief rationale. The agent decides which roles are worth surfacing.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">Email summary sent autonomously</div>
+              <div class="cs-step-desc">Sends a curated email with shortlisted roles, fit rationale, and direct links. No human triggered this. The agent ran the full loop and closed it.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-pullout" style="margin-top:2rem;">
+          <p>&ldquo;The interesting product moment is when the agent decides to stop. Knowing when you have enough is as important as knowing how to search.&rdquo;</p>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · Agentic Complexity</div>
+        <h2 class="cs-section-title">What agentic systems <span class="highlight">actually require</span></h2>
+
+        <div class="cs-two-col" style="margin-bottom:2rem;">
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Failure handling</div>
+            <h4>Tool failures can&rsquo;t crash the workflow</h4>
+            <p>Web scraping fails. APIs time out. The agent needs graceful degradation , skip the broken listing, log the failure, continue with others. This is product design, not just engineering.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Loop control</div>
+            <h4>Preventing infinite iteration is non-trivial</h4>
+            <p>Agents can get stuck refining and re-searching. Explicit stopping conditions , max iterations, confidence thresholds, result counts , are required by design.</p>
+          </div>
+        </div>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li><span><strong>Transparency is a product requirement:</strong> The Streamlit UI shows real-time tool calls and reasoning logs. Users need to see what the agent is doing , especially when it decides something unexpected.</span></li>
+          <li><span><strong>Autonomy and control are in tension:</strong> A fully autonomous agent that does unexpected things destroys trust. The right product balance is autonomy within clearly communicated scope.</span></li>
+          <li><span><strong>Context window management is a PM problem:</strong> A long job search workflow generates a lot of context. What to keep, summarise, or drop affects match quality and cost.</span></li>
+          <li><span><strong>MCP changes the integration model:</strong> Model Context Protocol enables standardised tool interfaces. Products built on MCP are more composable than custom function-calling implementations.</span></li>
+        </ul>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · Tech Stack</div>
+        <h2 class="cs-section-title">Built with</h2>
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">OpenAI Function Calling</span>
+          <span class="cs-tech-tag">MCP</span>
+          <span class="cs-tech-tag">A2A Protocols</span>
+          <span class="cs-tech-tag">Python</span>
+          <span class="cs-tech-tag">Streamlit</span>
+          <span class="cs-tech-tag">Web Scraping</span>
+          <span class="cs-tech-tag">Semantic Matching</span>
+          <span class="cs-tech-tag">Autonomous Agents</span>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Building an agentic product?</h2>
+      <p>I&rsquo;ve worked hands-on with agentic architectures, MCP integrations, and the product decisions that make autonomous systems trustworthy.</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn btn-primary btn-lg">Get in Touch</a>
+        <a href="index.html#work" class="btn btn-secondary btn-lg">&larr; All Projects</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

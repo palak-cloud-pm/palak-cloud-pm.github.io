@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: No-Code AI Career Page Builder — Senior PM Assignment for Manatal, by Palak Jain, Senior Product Manager." />
+  <title>No-Code Career Page Builder: Manatal PM Assignment · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #edfff7; }
+    .cs-page-hero {
+      padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      margin-bottom: 2rem; transition: color 0.18s;
+    }
+    .cs-back:hover { color: var(--text); }
+    .cs-back svg { flex-shrink: 0; }
+    .cs-hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .cs-meta-tag {
+      background: var(--green); border: var(--border); border-radius: var(--pill);
+      font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .cs-meta-tag.live { background: var(--blue); }
+    .cs-hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.08;
+      margin-bottom: 1.1rem; letter-spacing: -0.03em;
+    }
+    .cs-hero-sub {
+      font-size: 1.1rem; max-width: 640px;
+      line-height: 1.75; margin-bottom: 2.5rem; color: var(--sub);
+    }
+    .cs-quick-stats {
+      display: flex; flex-wrap: wrap; gap: 0; border: var(--border);
+      border-radius: var(--r); background: var(--surface); overflow: hidden;
+      width: fit-content; margin-bottom: 2rem;
+    }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue   { background: var(--blue); }
+    .cs-callout.green  { background: var(--green); }
+    .cs-callout.peach  { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout.pink   { background: var(--pink); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--blue); }
+    .cs-step:nth-child(2) { background: var(--yellow); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step:nth-child(6) { background: var(--purple); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-comp-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 1.5rem 0; border: var(--border); border-radius: var(--r); overflow: hidden; }
+    .cs-comp-table th { background: var(--surface); font-weight: 700; text-align: left; padding: 0.75rem 1rem; border-bottom: var(--border); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .cs-comp-table td { padding: 0.7rem 1rem; border-bottom: 1.5px solid rgba(26,26,26,0.06); color: var(--sub); vertical-align: top; line-height: 1.5; }
+    .cs-comp-table tr:last-child td { border-bottom: none; }
+    .cs-comp-table tr:nth-child(even) td { background: rgba(26,26,26,0.02); }
+    .cs-comp-table .check { color: #22a06b; font-weight: 700; }
+    .cs-comp-table .cross { color: rgba(26,26,26,0.3); }
+    .cs-comp-table .manatal-row td { background: var(--yellow); font-weight: 600; color: var(--text); }
+    .cs-footer-cta { background: var(--green); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 760px) { .cs-two-col { grid-template-columns: 1fr; } .cs-quick-stats { width: 100%; } .cs-qs { flex: 1; padding: 0.85rem 0.75rem; } .cs-comp-table { font-size: 0.75rem; } }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag">PM Assignment</span>
+        <span class="cs-meta-tag">Competitive Analysis</span>
+        <span class="cs-meta-tag">AI Product Design</span>
+        <span class="cs-meta-tag live">Live Prototype</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        No-Code AI Career Page Builder<br /><span class="highlight">Senior PM Assignment @ Manatal</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        A Senior PM assignment for Manatal, a leading recruitment SaaS. I audited their existing career page builder against 5 competitors, identified the critical product gaps, and shipped a working AI-powered prototype demonstrating what the next version should look like.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">5+</span>
+          <span class="cs-qs-label">Competitors Analysed</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">AI-First</span>
+          <span class="cs-qs-label">Design Approach</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Live</span>
+          <span class="cs-qs-label">Prototype</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="https://palak-cloud-pm.github.io/no-code-career-page-builder/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View Live Prototype
+        </a>
+        <a href="https://github.com/palak-cloud-pm/no-code-career-page-builder" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Context &amp; Brief</div>
+        <h2 class="cs-section-title">The assignment: <span class="highlight">make Manatal&rsquo;s career page builder the best in its category</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Manatal is a cloud-based recruitment platform used by staffing agencies and HR teams across Southeast Asia and beyond. Their career page builder lets companies create a branded jobs landing page connected to their Manatal ATS, but the feature had not kept pace with the market.
+            </p>
+            <p>
+              The assignment asked me to take on the role of a Senior PM owning this feature: <strong>audit the current product, benchmark it against the best in the market, identify the gaps, and design what the next version should look like.</strong>
+            </p>
+            <p>
+              Rather than produce a slide deck with recommendations, I built a working, deployed prototype of the improved builder, showing exactly what it would feel like to use, not just what it might look like on paper.
+            </p>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Brief</div>
+              <h4>Evaluate, benchmark, and improve</h4>
+              <p>Audit the existing career page builder, identify the highest-value gaps versus competition, and design the next iteration with a clear product rationale.</p>
+            </div>
+            <div class="cs-callout peach">
+              <div class="cs-callout-label">My Approach</div>
+              <h4>Show, don&rsquo;t tell</h4>
+              <p>Instead of recommendations in a deck, I shipped a live, clickable prototype demonstrating exactly what the improved builder would do, end to end.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · Competitive Analysis</div>
+        <h2 class="cs-section-title">Five platforms, <span class="highlight">one clear pattern</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.75rem;">
+          <p>
+            I evaluated Manatal against Workable, Greenhouse, Lever, Teamtailor, and BambooHR, focusing on four dimensions that directly affect the quality of a career page builder as a product: content creation, customisation, analytics, and platform integration.
+          </p>
+        </div>
+
+        <table class="cs-comp-table" aria-label="Competitive analysis of career page builders">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>AI Content Generation</th>
+              <th>WYSIWYG Editor</th>
+              <th>Multi-template Library</th>
+              <th>Built-in Analytics</th>
+              <th>ATS Job Sync</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Workable</strong></td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes (10+)</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Teamtailor</strong></td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes (20+)</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Greenhouse</strong></td>
+              <td class="cross">No</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Lever</strong></td>
+              <td class="cross">No</td>
+              <td class="check">Partial</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td><strong>BambooHR</strong></td>
+              <td class="cross">No</td>
+              <td class="cross">Limited</td>
+              <td class="cross">Limited</td>
+              <td class="check">Basic</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr class="manatal-row">
+              <td><strong>Manatal (current)</strong></td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+              <td class="cross">Limited</td>
+              <td class="cross">No</td>
+              <td class="check">Yes</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="cs-pullout">
+          <p>Manatal had the ATS integration right. Everything on top of it was table stakes they were missing.</p>
+        </div>
+
+        <div class="cs-prose">
+          <p>
+            The pattern was unmistakable. Manatal&rsquo;s ATS integration was solid, but modern career page builders had moved to AI-assisted content generation, rich WYSIWYG editing, and conversion analytics as baseline expectations. Manatal&rsquo;s builder was functional, not differentiated.
+          </p>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · The Gaps</div>
+        <h2 class="cs-section-title">Four gaps worth <span class="highlight">actually fixing</span></h2>
+
+        <div class="cs-steps">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">No AI content generation</div>
+              <div class="cs-step-desc">Companies, especially SMBs, struggle to write compelling employer brand copy. Every top competitor now offers AI-assisted generation from a brief. Manatal had none. This was the biggest perceived gap for new users.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">No WYSIWYG editor</div>
+              <div class="cs-step-desc">Editing required navigating separate settings screens. Users had no real-time visual feedback. The leading tools (Teamtailor, Workable) offered block-based drag-and-drop editing with instant preview, a dramatically better experience.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Thin template library</div>
+              <div class="cs-step-desc">One or two layout options versus 10-20 on competing platforms. Companies in creative or consumer industries found the options limiting. Template variety signals brand credibility at the point of first impression.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">No career page analytics</div>
+              <div class="cs-step-desc">Manatal tracked applicants inside the ATS, but had no visibility into how the career page itself was performing: visitors, conversion rate, traffic sources, drop-off. This made it impossible for hiring managers to improve their recruitment funnel upstream of applications.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · What I Built</div>
+        <h2 class="cs-section-title">A working prototype: <span class="highlight">the career page builder, rebuilt</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:2rem;">
+          <p>
+            I built a fully functional, deployed prototype of the improved career page builder in HTML, CSS, and JavaScript. Every screen in the user journey is interactive and demonstrates the product experience, not just a wireframe or mockup.
+          </p>
+        </div>
+
+        <div class="cs-two-col" style="margin-bottom:2rem;">
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Screen 1</div>
+            <h4>Dashboard</h4>
+            <p>Overview of the live career page: current theme, URL, open roles count, and quick access to the editor. Gives the user a sense of status before they edit.</p>
+          </div>
+          <div class="cs-callout yellow">
+            <div class="cs-callout-label">Screen 2</div>
+            <h4>Theme Selection</h4>
+            <p>Four template options: Modern, Creative, Minimal, and AI-generated Custom. Each with a live visual preview so users can compare before committing.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Screen 3</div>
+            <h4>AI Content Brief</h4>
+            <p>Five-question guided flow: company culture, values, industry, tone of voice, and key benefits. Answers feed directly into AI-generated copy for hero, culture, and values sections.</p>
+          </div>
+          <div class="cs-callout peach">
+            <div class="cs-callout-label">Screen 4</div>
+            <h4>Visual Editor</h4>
+            <p>Block-based WYSIWYG with a live canvas, left-panel section library, and right-panel property editor. Real-time preview across desktop, tablet, and mobile breakpoints.</p>
+          </div>
+          <div class="cs-callout purple">
+            <div class="cs-callout-label">Screen 5</div>
+            <h4>Live Preview &amp; Publish</h4>
+            <p>Full-page preview before go-live, with a publish confirmation modal and automatic Manatal job sync. The published page carries a live URL and an auto-updated open roles section.</p>
+          </div>
+          <div class="cs-callout pink">
+            <div class="cs-callout-label">Screen 6</div>
+            <h4>Analytics Dashboard</h4>
+            <p>Visitor traffic, application conversion rate, traffic source breakdown, and page engagement, closing the loop from career page performance back to hiring decisions.</p>
+          </div>
+        </div>
+
+        <img src="projects/8-manatal-career-page-builder.png" alt="Manatal career page builder prototype screenshot" class="cs-project-img fade-in" loading="lazy" onerror="this.style.display='none'">
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">05 · Key Product Decisions</div>
+        <h2 class="cs-section-title">The choices that <span class="highlight">shaped the design</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              <strong>AI-first, not AI-only.</strong> The builder offers both an AI-generated path and a manual path from the same entry point. The AI path answers the blank-page problem for most users, the manual path gives control to companies with existing brand guidelines. Forcing one removes the other&rsquo;s customer.
+            </p>
+            <p>
+              <strong>Keep Manatal&rsquo;s core advantage.</strong> The job sync from Manatal ATS is genuinely differentiated. Rather than rebuilding it, I made it more visible, adding a &ldquo;Synced from Manatal&rdquo; badge on role cards to reinforce platform integration as a selling point, not just a utility.
+            </p>
+            <p>
+              <strong>Analytics as a retention driver.</strong> Career page analytics give hiring managers a reason to return to the builder after publishing. Without it, the feature is a one-time setup task. With it, it becomes a live tool in the hiring workflow.
+            </p>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout blue">
+              <div class="cs-callout-label">Prioritisation Framework</div>
+              <h4>Impact vs. effort for each gap</h4>
+              <p>AI generation and WYSIWYG editing were high-impact, medium-effort. Analytics were high-impact but required data infrastructure. Template library was medium-impact, low-effort. I sequenced accordingly.</p>
+            </div>
+            <div class="cs-callout green">
+              <div class="cs-callout-label">Design Principle</div>
+              <h4>Progressive disclosure throughout</h4>
+              <p>The AI questionnaire reveals one question at a time. The editor reveals advanced options in the right panel only when a block is selected. Complexity is earned, not front-loaded.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">Claude Code</span>
+          <span class="cs-tech-tag">HTML / CSS / JS</span>
+          <span class="cs-tech-tag">GitHub Pages</span>
+          <span class="cs-tech-tag">Competitive Analysis</span>
+          <span class="cs-tech-tag">Product Strategy</span>
+          <span class="cs-tech-tag">WYSIWYG Builder</span>
+          <span class="cs-tech-tag">AI Content Generation</span>
+          <span class="cs-tech-tag">Prioritisation Frameworks</span>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">06 · Reflection</div>
+        <h2 class="cs-section-title">What this project <span class="highlight">demonstrates</span></h2>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li>
+            <span><strong>Competitive analysis as a product decision:</strong> I didn&rsquo;t just list what competitors had. I turned the gaps into a prioritised feature set, grounded in user impact and Manatal&rsquo;s existing strengths. The analysis shaped the prototype, not the other way around.</span>
+          </li>
+          <li>
+            <span><strong>Shipping over pitching:</strong> A working prototype communicates a product vision more precisely than any deck. It reveals edge cases, interaction logic, and UX decisions that slide bullets cannot. I build to think, not to present.</span>
+          </li>
+          <li>
+            <span><strong>AI-native PM execution:</strong> Built end-to-end solo using Claude Code. No engineers, no designers, no agency. From competitive brief to live URL. This is the productivity unlock AI tools give a PM who knows how to use them.</span>
+          </li>
+          <li>
+            <span><strong>Platform thinking:</strong> The best product decision wasn&rsquo;t adding features. It was identifying which existing feature (ATS job sync) was already the moat, and making it more visible. Good PMs amplify what&rsquo;s already working before stacking new complexity on top.</span>
+          </li>
+          <li>
+            <span><strong>Metric-first feature design:</strong> Every feature in the prototype traces back to a measurable outcome: time to first published page (AI generation), return usage rate (analytics), employer brand quality (templates + WYSIWYG). No features for features&rsquo; sake.</span>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Want to discuss this assignment?</h2>
+      <p>I&rsquo;m happy to walk through the competitive analysis, the product decisions, or the prototype in detail.</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn btn-primary btn-lg">Get in Touch</a>
+        <a href="https://palak-cloud-pm.github.io/no-code-career-page-builder/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">View Prototype &rarr;</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

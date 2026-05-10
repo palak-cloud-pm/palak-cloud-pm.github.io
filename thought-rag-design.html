@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RAG Is a Product Design Problem, Not an Engineering Problem — by Palak Jain, Senior Product Manager." />
+  <title>RAG Is a Product Design Problem · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #ecf4ff; }
+    .article-page-hero { padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 3rem; max-width: 1080px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 2rem; transition: color 0.18s; }
+    .cs-back:hover { color: var(--text); }
+    .article-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .article-meta-tag { background: var(--pink); border: var(--border); border-radius: var(--pill); font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .article-title { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin-bottom: 1.1rem; letter-spacing: -0.03em; max-width: 820px; }
+    .article-intro { font-size: 1.12rem; max-width: 680px; line-height: 1.75; color: var(--sub); margin-bottom: 0; }
+    .article-body { max-width: 1080px; margin: 0 auto; padding: 4rem clamp(1.5rem, 5vw, 3.5rem) 5rem; }
+    .article-section { max-width: 700px; }
+    .article-section { padding: 2.5rem 0; border-top: var(--border-light); }
+    .article-section:first-child { border-top: none; padding-top: 0; }
+    .article-section h2 { font-size: clamp(1.25rem, 2.5vw, 1.6rem); margin-bottom: 1rem; letter-spacing: -0.025em; }
+    .article-prose p { font-size: 0.97rem; line-height: 1.85; color: var(--sub); margin-bottom: 1rem; }
+    .article-prose p:last-child { margin-bottom: 0; }
+    .article-prose strong { color: var(--text); font-weight: 600; }
+    .article-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.75rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .article-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; margin: 0; }
+    .article-callout { border: var(--border); border-radius: var(--r-sm); padding: 1.25rem 1.5rem; margin: 1rem 0; box-shadow: var(--shadow-sm); }
+    .article-callout.yellow { background: var(--yellow); }
+    .article-callout.blue { background: var(--blue); }
+    .article-callout.green { background: var(--green); }
+    .article-callout.peach { background: var(--peach); }
+    .article-callout.pink { background: var(--pink); }
+    .article-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.5rem; }
+    .article-callout h4 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; text-transform: none; letter-spacing: -0.01em; }
+    .article-callout p { font-size: 0.82rem; line-height: 1.65; color: var(--sub); }
+    .article-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
+    .article-list li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.93rem; line-height: 1.7; color: var(--sub); }
+    .article-list li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.14rem; }
+    .article-list strong { color: var(--text); }
+    .article-footer-cta { background: var(--pink); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .article-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+    .article-footer-cta p { font-size: 1rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+    .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="article-page-hero">
+      <a href="index.html#thoughts" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Thoughts &amp; Ideas
+      </a>
+
+      <div class="article-meta fade-in">
+        <span class="article-meta-tag">RAG</span>
+        <span class="article-meta-tag">LLMs</span>
+        <span class="article-meta-tag">AI Evaluation</span>
+        <span class="article-meta-tag">5 min read</span>
+      </div>
+
+      <h1 class="article-title fade-in">RAG Is a Product Design Problem, Not an Engineering Problem</h1>
+
+      <p class="article-intro fade-in">
+        Every team building an AI product hits the same wall. The model is fine. The infrastructure is fine. And then real users start asking real questions and the answers get oddly confident, oddly wrong. The reflex is to call in engineers. It&rsquo;s almost always the wrong reflex.
+      </p>
+    </div>
+
+    <div class="article-body">
+
+      <div class="article-section fade-in">
+        <div class="article-prose">
+          <p>
+            Every team building an AI product hits the same wall. The model is fine. The infrastructure is fine. The vibes from the demo are fine. And then real users start asking real questions and the answers get oddly confident, oddly wrong, and oddly hard to debug. The reflex is to call in the engineers and &ldquo;fix the RAG.&rdquo; It&rsquo;s almost always the wrong reflex. RAG is, primarily, a <em>product design</em> problem.
+          </p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>What teams get wrong</h2>
+        <div class="article-prose">
+          <p>
+            The standard RAG conversation in most rooms is about chunking strategy, embedding choice, and vector store latency. Those matter. They are not the headline.
+          </p>
+          <p>
+            The headline is: <strong>what does the user think they&rsquo;re asking, and what is the system actually retrieving?</strong> That gap is a product question, not an engineering one. You can have a perfect retrieval pipeline that pulls beautifully from the wrong corpus and fails users every time.
+          </p>
+          <p>The mismatches I&rsquo;ve seen most often:</p>
+        </div>
+
+        <ul class="article-list">
+          <li><span>The user asks a &ldquo;how do I&hellip;&rdquo; question. The retrieval is optimised for &ldquo;what is&hellip;&rdquo; content.</span></li>
+          <li><span>The user is in the middle of a workflow. The retrieval doesn&rsquo;t know that and pulls top-of-funnel docs.</span></li>
+          <li><span>The user wants the <em>current</em> policy. The retrieval doesn&rsquo;t distinguish between live and deprecated content.</span></li>
+        </ul>
+
+        <div class="article-prose" style="margin-top:1rem;">
+          <p>None of those are model problems. All of them are product problems pretending to be tech problems.</p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>The corpus is your real product</h2>
+        <div class="article-prose">
+          <p>
+            I now think about the RAG corpus the way I used to think about a product catalogue. It needs:
+          </p>
+        </div>
+
+        <div class="article-callout yellow">
+          <div class="article-callout-label">Requirement 1</div>
+          <h4>Curators</h4>
+          <p>Real owners who decide what&rsquo;s in and what&rsquo;s out. Without curators, the corpus drifts. Drift starts on day one and compounds quietly until QA catches it.</p>
+        </div>
+        <div class="article-callout blue">
+          <div class="article-callout-label">Requirement 2</div>
+          <h4>Versioning</h4>
+          <p>A way to deprecate stale content without nuking the index. Most teams skip this. Then a policy changes and the old one keeps surfacing for three months.</p>
+        </div>
+        <div class="article-callout green">
+          <div class="article-callout-label">Requirement 3</div>
+          <h4>A taxonomy</h4>
+          <p>Tags or metadata that map to actual user intents, not document categories. These are different things. The taxonomy should be built from user queries, not doc structure.</p>
+        </div>
+        <div class="article-callout pink">
+          <div class="article-callout-label">Requirement 4</div>
+          <h4>A feedback loop</h4>
+          <p>A way for users (and reviewers) to say &ldquo;this answer was wrong because the source was bad.&rdquo; Most teams have no mechanism for this. The corpus degrades silently.</p>
+        </div>
+
+        <div class="article-prose" style="margin-top:1.5rem;">
+          <p>
+            Most teams I see have a Google Drive of PDFs, an embedding job, and a hope. The single hire that&rsquo;s usually worth more than any model upgrade: one person with a mandate to own content management.
+          </p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>What the UX has to do for you</h2>
+        <div class="article-prose">
+          <p>Even a perfectly-curated corpus will produce wrong answers sometimes. The UX has to do the load-bearing work the retrieval can&rsquo;t:</p>
+        </div>
+
+        <ul class="article-list">
+          <li><span><strong>Show the source. Always.</strong> If you can&rsquo;t surface the source, your retrieval isn&rsquo;t ready to ship.</span></li>
+          <li><span><strong>Make disagreement cheap.</strong> A one-click &ldquo;this is wrong&rdquo; with a reason taxonomy is worth more than any benchmark.</span></li>
+          <li><span><strong>Refuse confidently.</strong> A clear &ldquo;I don&rsquo;t know&rdquo; beats a fluent guess. Train your team to celebrate refusals, not penalise them.</span></li>
+        </ul>
+
+        <div class="article-prose" style="margin-top:1rem;">
+          <p>
+            If the UI hides the seams, the seams will tear under real load. If the UI exposes the seams thoughtfully, users build a calibrated trust , they know when to lean on the system and when to push back.
+          </p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>The honest test</h2>
+        <div class="article-prose">
+          <p>
+            Before launching any RAG feature, I run one test: <strong>ask 30 real questions from real users and read every answer with the source side-by-side.</strong>
+          </p>
+          <p>
+            Not aggregate metrics. Not benchmarks. Thirty answers, by hand, on a Friday afternoon. If the answers feel right <em>and</em> the sources are defensible, you&rsquo;re close. If only one of those is true, you&rsquo;re shipping a problem.
+          </p>
+        </div>
+
+        <div class="article-pullout">
+          <p>RAG looks like a tech stack. It&rsquo;s actually a content operation, a UX, and a feedback loop wearing a tech costume.</p>
+        </div>
+
+        <div class="article-prose">
+          <p>
+            PMs who lead with that framing build products that survive contact with users. The rest spend the next quarter explaining why the model &ldquo;got worse.&rdquo; The model didn&rsquo;t get worse. The corpus did.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="article-footer-cta">
+      <h2>More from Palak</h2>
+      <p>Read more on AI product strategy, enterprise launches, and what changes when you go AI-native.</p>
+      <div class="btn-row">
+        <a href="index.html#thoughts" class="btn btn-primary btn-lg">All Articles</a>
+        <a href="index.html#contact" class="btn btn-secondary btn-lg">Get in Touch</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

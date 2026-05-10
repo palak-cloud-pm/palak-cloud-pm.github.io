@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: Podcast Intelligence RAG Chatbot — built by Palak Jain, Senior Product Manager." />
+  <title>Podcast Intelligence: RAG Chatbot · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #ecfaf6; }
+    .cs-page-hero { padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem; max-width: 1080px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 2rem; transition: color 0.18s; }
+    .cs-back:hover { color: var(--text); }
+    .cs-hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .cs-meta-tag { background: var(--green); border: var(--border); border-radius: var(--pill); font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cs-hero-title { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.08; margin-bottom: 1.1rem; letter-spacing: -0.03em; }
+    .cs-hero-sub { font-size: 1.1rem; max-width: 640px; line-height: 1.75; margin-bottom: 2.5rem; color: var(--sub); }
+    .cs-quick-stats { display: flex; flex-wrap: wrap; gap: 0; border: var(--border); border-radius: var(--r); background: var(--surface); overflow: hidden; width: fit-content; margin-bottom: 2rem; }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue   { background: var(--blue); }
+    .cs-callout.green  { background: var(--green); }
+    .cs-callout.peach  { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout.pink   { background: var(--pink); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--yellow); }
+    .cs-step:nth-child(2) { background: var(--blue); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-footer-cta { background: var(--green); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 760px) { .cs-two-col { grid-template-columns: 1fr; } .cs-quick-stats { width: 100%; } .cs-qs { flex: 1; padding: 0.85rem 0.75rem; } }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag">RAG</span>
+        <span class="cs-meta-tag">Pinecone</span>
+        <span class="cs-meta-tag">Deepgram</span>
+        <span class="cs-meta-tag">Streamlit</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        Podcast Intelligence:<br /><span class="highlight">RAG-Powered Q&amp;A Chatbot</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        A full retrieval-augmented generation pipeline that turns hours of audio content into a searchable knowledge base, letting users ask natural language questions and get cited, accurate answers in seconds.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">RAG</span>
+          <span class="cs-qs-label">Architecture</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Pinecone</span>
+          <span class="cs-qs-label">Vector Store</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Deepgram</span>
+          <span class="cs-qs-label">Transcription</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <div class="cs-project-img-row fade-in">
+        <img src="projects/2-podcast-rag-chatbot-architecture.jpeg" alt="Podcast RAG system architecture diagram" class="cs-project-img" style="margin:0;" loading="lazy">
+        <img src="projects/2-podcast-rag-chatbot-screenshot.png" alt="Podcast RAG chatbot screenshot" class="cs-project-img" style="margin:0;" loading="lazy">
+      </div>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Problem</div>
+        <h2 class="cs-section-title">Podcast content is <span class="highlight">unsearchable by default</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Hours of podcast content contain expert knowledge, case studies, and frameworks that listeners can rarely retrieve when needed. Standard keyword search doesn't work for audio, and even transcripts are hard to navigate.
+            </p>
+            <p>
+              The question this project set out to answer: what does it actually take to make an audio corpus queryable? Not just searchable by keyword, but genuinely answerable in natural language, with the source visible and defensible.
+            </p>
+            <p>
+              This is the same problem enterprise teams face with internal knowledge bases. Podcast content is a proxy for any large, unstructured, domain-specific corpus.
+            </p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Core Gap</div>
+              <h4>Audio is the least accessible knowledge format</h4>
+              <p>You can Ctrl+F a document. You can't Ctrl+F a podcast. Hours of expert insight sit locked in a format that's nearly impossible to query precisely.</p>
+            </div>
+            <div class="cs-callout peach">
+              <div class="cs-callout-label">The Product Stakes</div>
+              <h4>This scales to any unstructured corpus</h4>
+              <p>The same pipeline works for internal meetings, sales calls, support transcripts. Podcast content is the testbed. The pattern generalises everywhere.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · Architecture</div>
+        <h2 class="cs-section-title">From audio to answer: <span class="highlight">the full pipeline</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.5rem;">
+          <p>
+            The pipeline has two phases: ingestion (audio to indexed embeddings) and retrieval (query to cited answer). Both phases have distinct product design decisions embedded in them.
+          </p>
+        </div>
+
+
+        <div class="cs-steps" style="margin-top:2rem;">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Audio download and transcription</div>
+              <div class="cs-step-desc">Podcast audio is downloaded and passed to Deepgram for high-accuracy transcription. Speaker diarisation is enabled to maintain context about who said what.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Semantic chunking</div>
+              <div class="cs-step-desc">The transcript is split into overlapping chunks optimised for retrieval. Chunk size and overlap are product decisions: too small loses context, too large reduces precision.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Pinecone vector indexing</div>
+              <div class="cs-step-desc">Each chunk is embedded and stored in Pinecone with metadata (episode title, timestamp range, speaker). Metadata enables filtered retrieval, not just semantic search.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">Streamlit Q&amp;A interface</div>
+              <div class="cs-step-desc">Users type natural language questions. The system retrieves top-K chunks, passes them to the LLM, and displays the answer alongside the source transcript segments.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">Source-cited responses</div>
+              <div class="cs-step-desc">Every answer shows which chunks were used and which episode they came from. This is the product design principle: if you can't show the source, your retrieval isn't ready to ship.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-pullout" style="margin-top:2rem;">
+          <p>&ldquo;The chunking strategy is a product decision, not a technical one. It determines what the model can and cannot retrieve, which determines what questions the product can and cannot answer.&rdquo;</p>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · Product Learnings</div>
+        <h2 class="cs-section-title">What this taught me about <span class="highlight">RAG design</span></h2>
+
+        <div class="cs-two-col" style="margin-bottom:2rem;">
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Retrieval insight</div>
+            <h4>The corpus is the product</h4>
+            <p>A RAG system is only as good as its indexed content. Chunk quality, metadata richness, and index freshness are the real product surface, not the LLM or the UI.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Evaluation insight</div>
+            <h4>Citation is the evaluation mechanism</h4>
+            <p>Showing sources forces honest evaluation. If the retrieved chunk doesn't actually support the answer, that gap is immediately visible. Sourceless AI answers hide failures.</p>
+          </div>
+        </div>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li><span><strong>Transcription quality is upstream of everything:</strong> Bad transcription produces bad embeddings. Deepgram's accuracy was material to retrieval precision.</span></li>
+          <li><span><strong>Chunk overlap is a precision/recall tradeoff:</strong> More overlap means better cross-chunk context but higher cost and slower retrieval. This is a product spec decision.</span></li>
+          <li><span><strong>Metadata filters unlock precision retrieval:</strong> Being able to filter by episode or speaker means the user can ask "what did [guest] say about X" and get a precise answer.</span></li>
+          <li><span><strong>The test is 30 real questions:</strong> Before declaring the system ready, I asked 30 natural questions and read every answer with the source side-by-side. Aggregate metrics missed failures that hand review caught.</span></li>
+        </ul>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · Tech Stack</div>
+        <h2 class="cs-section-title">Built with</h2>
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">Deepgram</span>
+          <span class="cs-tech-tag">Pinecone</span>
+          <span class="cs-tech-tag">OpenAI Embeddings</span>
+          <span class="cs-tech-tag">Python</span>
+          <span class="cs-tech-tag">Streamlit</span>
+          <span class="cs-tech-tag">RAG Architecture</span>
+          <span class="cs-tech-tag">Vector Search</span>
+          <span class="cs-tech-tag">Semantic Chunking</span>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Interested in RAG and knowledge retrieval?</h2>
+      <p>Read more on how RAG is a product design problem, or see other AI projects.</p>
+      <div class="btn-row">
+        <a href="thought-rag-design.html" class="btn btn-primary">Read: RAG as Product Design</a>
+        <a href="index.html#work" class="btn btn-secondary">All Projects</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

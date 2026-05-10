@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: AI Networking Assistant with Semantic Matchmaking — built by Palak Jain, Senior Product Manager." />
+  <title>AI Networking Assistant: Case Study · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #fef0f7; }
+    .cs-page-hero { padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem; max-width: 1080px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 2rem; transition: color 0.18s; }
+    .cs-back:hover { color: var(--text); }
+    .cs-hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .cs-meta-tag { background: var(--pink); border: var(--border); border-radius: var(--pill); font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cs-hero-title { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.08; margin-bottom: 1.1rem; letter-spacing: -0.03em; }
+    .cs-hero-sub { font-size: 1.1rem; max-width: 640px; line-height: 1.75; margin-bottom: 2.5rem; color: var(--sub); }
+    .cs-quick-stats { display: flex; flex-wrap: wrap; gap: 0; border: var(--border); border-radius: var(--r); background: var(--surface); overflow: hidden; width: fit-content; margin-bottom: 2rem; }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue   { background: var(--blue); }
+    .cs-callout.green  { background: var(--green); }
+    .cs-callout.peach  { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout.pink   { background: var(--pink); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--yellow); }
+    .cs-step:nth-child(2) { background: var(--blue); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-footer-cta { background: var(--pink); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 760px) { .cs-two-col { grid-template-columns: 1fr; } .cs-quick-stats { width: 100%; } .cs-qs { flex: 1; padding: 0.85rem 0.75rem; } }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag">Voice AI</span>
+        <span class="cs-meta-tag">Pinecone</span>
+        <span class="cs-meta-tag">Twilio</span>
+        <span class="cs-meta-tag">ElevenLabs</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        AI Networking Assistant:<br /><span class="highlight">Semantic Matchmaking with Voice</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        An AI system that semantically matches professionals using Pinecone profile embeddings, then facilitates introductions automatically via ElevenLabs voice scripts and Twilio conference calls, with zero manual matching required.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">Semantic</span>
+          <span class="cs-qs-label">Matching</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Voice AI</span>
+          <span class="cs-qs-label">Introduction</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Zero</span>
+          <span class="cs-qs-label">Manual Matching</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">Solo</span>
+          <span class="cs-qs-label">Built by</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <div class="cs-project-img-row fade-in">
+        <img src="projects/4-social-switchboard-architecture.jpeg" alt="Social Switchboard system architecture" class="cs-project-img" style="margin:0;" loading="lazy">
+        <img src="projects/4-social-switchboard-architecture-detail.jpeg" alt="Social Switchboard architecture detail" class="cs-project-img" style="margin:0;" loading="lazy">
+      </div>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · Problem</div>
+        <h2 class="cs-section-title">Professional networking is <span class="highlight">slow and surface-level</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              Finding the right person to connect with at scale is slow, manual, and based on surface-level criteria. Job title, company, and mutual connections are poor proxies for genuine professional fit.
+            </p>
+            <p>
+              Most networking tools match on keywords and proximity. They can't understand that someone with 5 years in B2B SaaS growth is a better match for a specific conversation than someone with the word &ldquo;growth&rdquo; in their title who works in consumer apps.
+            </p>
+            <p>
+              The cold introduction problem compounds this: even when a good match exists, facilitating a connection requires a warm introduction or an awkward cold message. Most matches never happen because the friction is too high.
+            </p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout yellow">
+              <div class="cs-callout-label">The Match Problem</div>
+              <h4>Keywords don't capture professional fit</h4>
+              <p>Semantic similarity understands context and domain. Two people with very different titles can be highly relevant to each other. Keyword matching would never surface that.</p>
+            </div>
+            <div class="cs-callout blue">
+              <div class="cs-callout-label">The Friction Problem</div>
+              <h4>Cold introductions don't scale</h4>
+              <p>Even the best match goes nowhere without a warm introduction. Voice-mediated AI introductions reduce the friction of first contact to near zero.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · Architecture</div>
+        <h2 class="cs-section-title">How the matching and <span class="highlight">introduction flow works</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.5rem;">
+          <p>
+            The system has three layers: profile embedding (representing each person as a vector), semantic matching (finding the closest matches in Pinecone), and voice-mediated introduction (Twilio conference + ElevenLabs script).
+          </p>
+        </div>
+
+
+        <div class="cs-steps" style="margin-top:2rem;">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Profile ingestion and embedding</div>
+              <div class="cs-step-desc">Each professional profile (bio, experience, goals, context) is embedded using OpenAI and stored in Pinecone with associated metadata. The embedding captures semantic meaning, not just keywords.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Semantic similarity matching</div>
+              <div class="cs-step-desc">For each new profile, Pinecone finds the top-K most semantically similar existing profiles. Match score is based on embedding distance, not rule-based criteria.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">AI-generated introduction script</div>
+              <div class="cs-step-desc">For each match, an LLM generates a personalised introduction that explains why these two people are a good match, referencing specific overlap in their backgrounds.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">ElevenLabs voice synthesis</div>
+              <div class="cs-step-desc">The introduction script is converted to natural speech by ElevenLabs. The voice is consistent across all introductions, creating a coherent &ldquo;matchmaker&rdquo; persona.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">Twilio conference call initiation</div>
+              <div class="cs-step-desc">Twilio dials both parties and bridges them into a conference. The AI introduction plays first, then both participants hear each other. The facilitation is fully automated.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-pullout" style="margin-top:2rem;">
+          <p>&ldquo;The voice introduction is what makes cold connections warm. The AI is doing what a well-connected human matchmaker does, at scale and without fatigue.&rdquo;</p>
+        </div>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · Product Learnings</div>
+        <h2 class="cs-section-title">What this revealed about <span class="highlight">AI-mediated social products</span></h2>
+
+        <div class="cs-two-col" style="margin-bottom:2rem;">
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Trust insight</div>
+            <h4>Voice lowers perceived AI-ness</h4>
+            <p>A text introduction that says &ldquo;AI matched you&rdquo; triggers scepticism. A voice introduction that contextualises the match triggers curiosity. Medium matters for trust.</p>
+          </div>
+          <div class="cs-callout peach">
+            <div class="cs-callout-label">Embedding insight</div>
+            <h4>Profile quality determines match quality</h4>
+            <p>Sparse profiles produce poor embeddings. The upstream product problem is getting users to provide rich, contextual information, not just job title and company.</p>
+          </div>
+        </div>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li><span><strong>Semantic matching exposes the limits of keyword thinking:</strong> Two profiles with almost no keyword overlap can be highly relevant. This only becomes visible when you move to embedding-based matching.</span></li>
+          <li><span><strong>The introduction script is a product spec:</strong> What information the AI surfaces in an introduction, and in what order, determines whether the conversation starts well or awkwardly.</span></li>
+          <li><span><strong>Conference call timing is UX:</strong> How long the introduction plays before unmuting both parties, whether there's a beat of silence, whether the AI says goodbye first, all of these are product decisions.</span></li>
+          <li><span><strong>Consent is a first-class design requirement:</strong> Both parties need to understand and accept that they're speaking to an AI-brokered introduction. Transparency here isn't optional.</span></li>
+        </ul>
+      </section>
+
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · Tech Stack</div>
+        <h2 class="cs-section-title">Built with</h2>
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">Pinecone</span>
+          <span class="cs-tech-tag">OpenAI Embeddings</span>
+          <span class="cs-tech-tag">ElevenLabs</span>
+          <span class="cs-tech-tag">Twilio</span>
+          <span class="cs-tech-tag">Python</span>
+          <span class="cs-tech-tag">Flask</span>
+          <span class="cs-tech-tag">RAG</span>
+          <span class="cs-tech-tag">Vector Search</span>
+          <span class="cs-tech-tag">Voice AI</span>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Interested in voice AI and matchmaking products?</h2>
+      <p>See the voice assistant project for more on building phone-based AI systems.</p>
+      <div class="btn-row">
+        <a href="project-voice-assistant.html" class="btn btn-primary">Voice Assistant Case Study</a>
+        <a href="index.html#work" class="btn btn-secondary">All Projects</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

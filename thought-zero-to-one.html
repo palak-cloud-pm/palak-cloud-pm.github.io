@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Zero-to-One Inside an Enterprise Is Its Own Sport — by Palak Jain, Senior Product Manager." />
+  <title>Zero-to-One Inside an Enterprise Is Its Own Sport · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #f0ecff; }
+    .article-page-hero {
+      padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 3rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .cs-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 2rem; transition: color 0.18s; }
+    .cs-back:hover { color: var(--text); }
+    .article-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .article-meta-tag { background: var(--yellow); border: var(--border); border-radius: var(--pill); font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .article-title { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin-bottom: 1.1rem; letter-spacing: -0.03em; max-width: 820px; }
+    .article-intro { font-size: 1.12rem; max-width: 680px; line-height: 1.75; color: var(--sub); margin-bottom: 0; }
+    .article-body { max-width: 1080px; margin: 0 auto; padding: 4rem clamp(1.5rem, 5vw, 3.5rem) 5rem; }
+    .article-section { max-width: 700px; }
+    .article-section { padding: 2.5rem 0; border-top: var(--border-light); }
+    .article-section:first-child { border-top: none; padding-top: 0; }
+    .article-section h2 { font-size: clamp(1.25rem, 2.5vw, 1.6rem); margin-bottom: 1rem; letter-spacing: -0.025em; }
+    .article-prose p { font-size: 0.97rem; line-height: 1.85; color: var(--sub); margin-bottom: 1rem; }
+    .article-prose p:last-child { margin-bottom: 0; }
+    .article-prose strong { color: var(--text); font-weight: 600; }
+    .article-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.75rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .article-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; margin: 0; }
+    .article-callout { border: var(--border); border-radius: var(--r-sm); padding: 1.25rem 1.5rem; margin: 1.5rem 0; box-shadow: var(--shadow-sm); }
+    .article-callout.yellow { background: var(--yellow); }
+    .article-callout.blue { background: var(--blue); }
+    .article-callout.green { background: var(--green); }
+    .article-callout.peach { background: var(--peach); }
+    .article-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.5rem; }
+    .article-callout h4 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; text-transform: none; letter-spacing: -0.01em; }
+    .article-callout p { font-size: 0.82rem; line-height: 1.65; color: var(--sub); }
+    .article-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
+    .article-list li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.93rem; line-height: 1.7; color: var(--sub); }
+    .article-list li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.14rem; }
+    .article-list strong { color: var(--text); }
+    .article-footer-cta { background: var(--yellow); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .article-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+    .article-footer-cta p { font-size: 1rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+    .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="article-page-hero">
+      <a href="index.html#thoughts" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Thoughts &amp; Ideas
+      </a>
+
+      <div class="article-meta fade-in">
+        <span class="article-meta-tag">Enterprise</span>
+        <span class="article-meta-tag">Strategy</span>
+        <span class="article-meta-tag">5 min read</span>
+      </div>
+
+      <h1 class="article-title fade-in">Zero-to-One Inside an Enterprise Is Its Own Sport</h1>
+
+      <p class="article-intro fade-in">
+        I&rsquo;ve done zero-to-one in startups and inside large enterprises. They look similar from the outside. They are very different sports , and anyone moving between the two needs to rewire their default moves, or they&rsquo;ll lose the launch.
+      </p>
+    </div>
+
+    <div class="article-body">
+
+      <div class="article-section fade-in">
+        <div class="article-prose">
+          <p>
+            I&rsquo;ve done zero-to-one in startups (ZipGo, Health &amp; Glow&rsquo;s eCommerce build) and zero-to-one inside large enterprises (Indeed Flex&rsquo;s first client-facing API, the messaging vision I drove for 12 months). They look similar from the outside. They are very different sports. Anyone moving between the two needs to rewire their default moves, or they&rsquo;ll lose the launch.
+          </p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>In a startup, you ship to discover. In an enterprise, you align to ship.</h2>
+        <div class="article-prose">
+          <p>
+            The startup zero-to-one rhythm is: spike a build, put it in a few users&rsquo; hands, see what survives, kill what doesn&rsquo;t. Discovery happens through shipping. Speed is the strategy.
+          </p>
+          <p>
+            In an enterprise, that rhythm is dangerous. A scrappy spike can accidentally collide with five existing teams, two compliance frameworks, and a customer SLA. So the rhythm flips: you align first, then ship a smaller-than-you&rsquo;d-like first version that respects all the surrounding constraints.
+          </p>
+          <p>
+            The mistake I made early at Indeed Flex was importing startup pace into an enterprise context. The team built fast. The launch stalled because three groups I hadn&rsquo;t talked to had legitimate concerns, and they were right.
+          </p>
+          <p>
+            The fix wasn&rsquo;t to slow down the build. It was to <strong>front-load the alignment</strong> so the build, when it happened, was uncontroversial.
+          </p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>The &ldquo;seven yes&rdquo; rule</h2>
+        <div class="article-prose">
+          <p>
+            For any enterprise zero-to-one, I now keep a quiet running list: <strong>who are the seven people whose &lsquo;yes&rsquo; I need before launch day?</strong> Not approvals , actual yeses, where they nod along in the room.
+          </p>
+          <p>Typical list at Indeed Flex:</p>
+        </div>
+
+        <ul class="article-list">
+          <li><span>The legal/compliance lead</span></li>
+          <li><span>The data privacy reviewer</span></li>
+          <li><span>The platform engineering manager whose API I&rsquo;m extending</span></li>
+          <li><span>The customer success lead for the affected segment</span></li>
+          <li><span>The security architect</span></li>
+          <li><span>The relevant client&rsquo;s account manager (yes, externally too)</span></li>
+          <li><span>The exec sponsor whose name will be on the launch comms</span></li>
+        </ul>
+
+        <div class="article-prose" style="margin-top:1rem;">
+          <p>
+            If any of those seven are still a &ldquo;maybe&rdquo; the week before launch, the launch will slip. Not might. Will.
+          </p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>What I learned shipping the Worker Status API</h2>
+        <div class="article-prose">
+          <p>
+            When we built the first client-facing API for Stord, the technical work was the easy half. The hard half was figuring out what the <em>contract</em> was , both literally (the API contract) and politically (the org contract about who owns the API after launch).
+          </p>
+          <p>The lessons that transferred from startup-land:</p>
+        </div>
+
+        <div class="article-callout yellow">
+          <div class="article-callout-label">Startup lesson that survived</div>
+          <h4>Ship the smallest viable surface</h4>
+          <p>One endpoint, one client, one clean use case. Don&rsquo;t generalise on day one. Instrument before you optimise.</p>
+        </div>
+
+        <div class="article-callout blue">
+          <div class="article-callout-label">Enterprise-specific lesson</div>
+          <h4>Name the owner publicly</h4>
+          <p>The team that builds an API and the team that runs it forever can be different. Be explicit about who that is, on the launch doc. And document the deprecation path , sounds insane on day one, saves you twelve months later.</p>
+        </div>
+      </div>
+
+      <div class="article-section fade-in">
+        <h2>The mindset shift</h2>
+        <div class="article-prose">
+          <p>
+            The single biggest mindset shift between startup zero-to-one and enterprise zero-to-one is the role of <em>speed</em>. In a startup, speed is leverage. In an enterprise, speed without alignment is just risk in disguise.
+          </p>
+          <p>
+            That doesn&rsquo;t mean enterprises have to be slow. The fast enterprise teams I&rsquo;ve worked with are obsessive about parallelising the alignment work , running compliance review, design review, and engineering scoping concurrently rather than sequentially. They look slow because they&rsquo;re talking a lot. They&rsquo;re actually faster because nothing blocks at the end.
+          </p>
+        </div>
+
+        <div class="article-pullout">
+          <p>The teams that move fast and ship clean are the ones that did the unglamorous alignment work in the first two weeks. They just don&rsquo;t talk about that part.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="article-footer-cta">
+      <h2>More from Palak</h2>
+      <p>Read more on AI product strategy, RAG design, and what changes when you go AI-native.</p>
+      <div class="btn-row">
+        <a href="index.html#thoughts" class="btn btn-primary btn-lg">All Articles</a>
+        <a href="index.html#contact" class="btn btn-secondary btn-lg">Get in Touch</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

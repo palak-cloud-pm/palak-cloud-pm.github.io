@@ -175,6 +175,30 @@ sections.forEach(s => sectionObserver.observe(s));
 // 7. SMOOTH SCROLL POLYFILL (for older Safari)
 // ============================================================
 
+
+// ============================================================
+// 8. WORK CARD TILT EFFECT
+// ============================================================
+
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transition = 'box-shadow 0.3s ease';
+    card.style.transform  = `perspective(700px) rotateY(${x * 10}deg) rotateX(${-y * 8}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transition = 'transform 0.45s ease, box-shadow 0.35s ease';
+    card.style.transform  = '';
+  });
+});
+
+
+// ============================================================
+// 9. SMOOTH SCROLL POLYFILL (for older Safari)
+// ============================================================
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
@@ -185,3 +209,143 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     window.scrollTo({ top, behavior: 'smooth' });
   });
 });
+
+
+// ============================================================
+// 10. MOBILE ACCORDION — EXPERIENCE TIMELINE
+// ============================================================
+
+function initTimelineAccordion() {
+  if (window.innerWidth > 960) return;
+  document.querySelectorAll('.timeline-item').forEach(item => {
+    if (item.querySelector('.timeline-toggle-btn')) return; // already initialised
+    const btn = document.createElement('button');
+    btn.className = 'timeline-toggle-btn';
+    btn.innerHTML = 'Show details <span class="toggle-arrow">&#8595;</span>';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('expanded');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.innerHTML = open
+        ? 'Hide details <span class="toggle-arrow">&#8595;</span>'
+        : 'Show details <span class="toggle-arrow">&#8595;</span>';
+    });
+    const tags = item.querySelector('.timeline-tags');
+    if (tags) tags.after(btn);
+    else item.querySelector('.timeline-card').appendChild(btn);
+  });
+}
+
+initTimelineAccordion();
+window.addEventListener('resize', () => {
+  if (window.innerWidth <= 960) initTimelineAccordion();
+});
+
+
+// ============================================================
+// 11. AUTO-SCROLL — WORK CARDS & THOUGHTS (mobile only)
+// ============================================================
+
+function initAutoScroll(container, intervalMs) {
+  if (!container) return;
+  let timer = null;
+  let paused = false;
+
+  function getCardWidth() {
+    const card = container.firstElementChild;
+    if (!card) return 300;
+    return card.offsetWidth + parseInt(getComputedStyle(container).gap || '14');
+  }
+
+  function step() {
+    if (paused) return;
+    const max = container.scrollWidth - container.clientWidth;
+    if (container.scrollLeft >= max - 4) {
+      container.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+    }
+  }
+
+  function start() {
+    if (timer) return;
+    timer = setInterval(step, intervalMs);
+  }
+
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  // Pause on user interaction, resume after 4s idle
+  container.addEventListener('touchstart', () => {
+    paused = true;
+    stop();
+  }, { passive: true });
+
+  container.addEventListener('touchend', () => {
+    setTimeout(() => {
+      paused = false;
+      start();
+    }, 4000);
+  }, { passive: true });
+
+  // Start/stop based on visibility
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting ? start() : stop());
+  }, { threshold: 0.4 });
+
+  observer.observe(container);
+}
+
+// Thoughts: snap-based auto-scroll on mobile
+if (window.innerWidth <= 600) {
+  initAutoScroll(document.querySelector('.thoughts-list'), 3800);
+}
+
+// ============================================================
+// 12. CONTINUOUS SCROLL — WORK CARDS (mobile only)
+// ============================================================
+
+(function () {
+  if (window.innerWidth > 600) return;
+  const grid = document.querySelector('.work-grid');
+  if (!grid) return;
+
+  const SPEED = 0.5; // px per frame — adjust for faster/slower
+  let raf = null;
+  let paused = false;
+
+  function tick() {
+    if (!paused) {
+      const max = grid.scrollWidth - grid.clientWidth;
+      if (grid.scrollLeft >= max) {
+        grid.scrollLeft = 0; // seamless loop
+      } else {
+        grid.scrollLeft += SPEED;
+      }
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  // Pause on touch, resume after finger lifts
+  grid.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+  grid.addEventListener('touchend',   () => {
+    setTimeout(() => { paused = false; }, 2000);
+  }, { passive: true });
+
+  // Only run while section is visible
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !raf) {
+        raf = requestAnimationFrame(tick);
+      } else if (!e.isIntersecting && raf) {
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+    });
+  }, { threshold: 0.2 });
+
+  obs.observe(grid);
+}());
