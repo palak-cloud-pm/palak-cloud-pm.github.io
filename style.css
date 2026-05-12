@@ -851,20 +851,18 @@ strong { color: var(--text); font-weight: 600; }
   .stat-value { font-size: 1.25rem; }
   .hero-visual { display: none; } /* hide impact card — stats bar tells the story */
 
-  /* ── AI PROJECTS — horizontal swipe carousel ── */
+  /* ── AI PROJECTS — vertical stack on mobile ── */
   .work-grid {
     display: flex !important;
-    flex-direction: row;
-    overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 0.85rem;
-    padding: 0.5rem clamp(1.5rem, 5vw, 3.5rem) 1.75rem;
-    margin: 0 calc(-1 * clamp(1.5rem, 5vw, 3.5rem));
+    flex-direction: column;
+    overflow-x: unset;
+    gap: 1rem;
+    padding: 0.5rem 0 1.75rem;
+    margin: 0;
   }
-  .work-grid::-webkit-scrollbar { display: none; }
   .work-card {
-    flex: 0 0 82vw !important;
+    flex: unset !important;
+    width: 100%;
     min-width: 0;
   }
   /* Numbers always colored on mobile (no hover state) */
