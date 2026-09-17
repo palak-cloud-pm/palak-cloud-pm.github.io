@@ -237,7 +237,7 @@ strong { color: var(--text); font-weight: 600; }
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--green);
+  background: var(--blue);
   border: var(--border);
   font-size: 0.76rem; font-weight: 600;
   padding: 6px 16px;
@@ -506,9 +506,10 @@ strong { color: var(--text); font-weight: 600; }
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .timeline-card:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow); }
-.timeline-item:nth-child(1) .timeline-card { background: var(--blue);  }
-.timeline-item:nth-child(2) .timeline-card { background: var(--pink);  }
-.timeline-item:nth-child(3) .timeline-card { background: var(--green); }
+.timeline-item:nth-child(1) .timeline-card { background: var(--yellow); }
+.timeline-item:nth-child(2) .timeline-card { background: var(--blue);  }
+.timeline-item:nth-child(3) .timeline-card { background: var(--pink);  }
+.timeline-item:nth-child(4) .timeline-card { background: var(--green); }
 
 .timeline-header {
   display: flex; justify-content: space-between;
