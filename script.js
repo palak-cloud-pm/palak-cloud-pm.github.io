@@ -102,6 +102,7 @@ const PHRASES = [
   'IIT Kharagpur Alumni',
   'Global Product Leader',
   'AI Copilot Architect',
+  '0→1 Marketplace Builder',
   'From 0→1 to Millions',
 ];
 

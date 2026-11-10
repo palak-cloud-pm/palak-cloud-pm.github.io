@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: Guapd, an AI-powered brand-creator collaboration platform. A 0-to-1 side project co-founded and built by Palak Jain." />
+  <title>Guapd: AI-Powered Brand-Creator Collaboration Platform · Palak Jain</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root { --bg: #fff1ec; }
+    .cs-page-hero {
+      padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 3.5rem) 4rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      margin-bottom: 2rem; transition: color 0.18s;
+    }
+    .cs-back:hover { color: var(--text); }
+    .cs-back svg { flex-shrink: 0; }
+    .cs-hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .cs-meta-tag {
+      background: var(--green); border: var(--border); border-radius: var(--pill);
+      font-size: 0.68rem; font-weight: 700; padding: 3px 12px; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .cs-meta-tag.live { background: var(--blue); }
+    .cs-hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.08;
+      margin-bottom: 1.1rem; letter-spacing: -0.03em;
+    }
+    .cs-hero-sub {
+      font-size: 1.1rem; max-width: 640px;
+      line-height: 1.75; margin-bottom: 1.25rem; color: var(--sub);
+    }
+    .cs-hero-note {
+      font-size: 0.9rem; max-width: 640px; line-height: 1.7;
+      color: var(--sub); margin-bottom: 2.5rem;
+      border-left: 3px solid var(--text); padding-left: 1rem;
+    }
+    .cs-quick-stats {
+      display: flex; flex-wrap: wrap; gap: 0; border: var(--border);
+      border-radius: var(--r); background: var(--surface); overflow: hidden;
+      width: fit-content; margin-bottom: 2rem;
+    }
+    .cs-qs { padding: 1rem 1.5rem; border-right: var(--border); text-align: center; }
+    .cs-qs:last-child { border-right: none; }
+    .cs-qs-val { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
+    .cs-qs-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .cs-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cs-body { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 3.5rem); }
+    .cs-section { padding: 4rem 0; border-top: var(--border-light); }
+    .cs-section-num { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.4rem; font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .cs-section-title { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+    .cs-prose { font-size: 0.97rem; line-height: 1.8; color: var(--sub); max-width: 720px; }
+    .cs-prose p { margin-bottom: 1rem; }
+    .cs-prose p:last-child { margin-bottom: 0; }
+    .cs-prose strong { color: var(--text); }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .cs-three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; align-items: stretch; }
+    .cs-callout { border: var(--border); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+    .cs-callout.yellow { background: var(--yellow); }
+    .cs-callout.blue   { background: var(--blue); }
+    .cs-callout.green  { background: var(--green); }
+    .cs-callout.peach  { background: var(--peach); }
+    .cs-callout.purple { background: var(--purple); }
+    .cs-callout.pink   { background: var(--pink); }
+    .cs-callout-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; }
+    .cs-callout h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-transform: none; letter-spacing: -0.01em; }
+    .cs-callout p { font-size: 0.83rem; line-height: 1.65; color: var(--sub); }
+    .cs-callout ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+    .cs-callout li { font-size: 0.83rem; line-height: 1.55; color: var(--sub); padding-left: 1rem; position: relative; }
+    .cs-callout li::before { content: '•'; position: absolute; left: 0; color: var(--text); font-weight: 700; }
+    .cs-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-step { border: var(--border); border-radius: var(--r-sm); padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; transition: transform 0.18s, box-shadow 0.18s; }
+    .cs-step:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
+    .cs-step:nth-child(1) { background: var(--blue); }
+    .cs-step:nth-child(2) { background: var(--yellow); }
+    .cs-step:nth-child(3) { background: var(--pink); }
+    .cs-step:nth-child(4) { background: var(--green); }
+    .cs-step:nth-child(5) { background: var(--peach); }
+    .cs-step:nth-child(6) { background: var(--purple); }
+    .cs-step-num { font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'SFMono-Regular', Menlo, Courier, monospace; padding-top: 0.1rem; }
+    .cs-step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .cs-step-desc { font-size: 0.8rem; line-height: 1.6; color: var(--sub); }
+    .cs-pullout { border-left: 4px solid var(--text); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .cs-pullout p { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .cs-learnings { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .cs-learnings li { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.65; color: var(--sub); }
+    .cs-learnings li::before { content: '→'; color: var(--text); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; margin-top: 0.12rem; }
+    .cs-learnings strong { color: var(--text); }
+    .cs-tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cs-tech-tag { background: var(--surface); border: var(--border); border-radius: var(--pill); font-size: 0.76rem; font-weight: 600; padding: 5px 14px; color: var(--text); transition: transform 0.15s, box-shadow 0.15s; }
+    .cs-tech-tag:hover { transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+    .cs-footer-cta { background: var(--peach); border-top: var(--border); padding: 5rem clamp(1.5rem, 5vw, 3.5rem); text-align: center; }
+    .cs-footer-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+    .cs-footer-cta p { font-size: 1rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cs-footer-cta .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    /* Diagram: 3 products on 1 platform */
+    .gp-diagram { border: var(--border); border-radius: var(--r); background: var(--surface); padding: 1.5rem; box-shadow: var(--shadow-sm); margin: 2rem 0; }
+    .gp-diagram-title { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 1rem; }
+    .gp-products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .gp-product { border: var(--border); border-radius: var(--r-sm); padding: 0.9rem 1rem; text-align: center; }
+    .gp-product:nth-child(1) { background: var(--yellow); }
+    .gp-product:nth-child(2) { background: var(--pink); }
+    .gp-product:nth-child(3) { background: var(--blue); }
+    .gp-product-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .gp-product-for { font-size: 0.72rem; color: var(--sub); margin-top: 0.15rem; }
+    .gp-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; height: 26px; }
+    .gp-links span { justify-self: center; width: 2px; height: 100%; background: var(--text); }
+    .gp-platform { border: var(--border); border-radius: var(--r-sm); background: var(--text); color: #fff; padding: 1rem; text-align: center; }
+    .gp-platform-name { font-size: 0.95rem; font-weight: 700; }
+    .gp-platform-detail { font-size: 0.74rem; opacity: 0.75; margin-top: 0.25rem; line-height: 1.5; }
+
+    /* Diagram: 7-stage deal lifecycle (horizontal on desktop, vertical on phones) */
+    .gp-flow { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); column-gap: 1.4rem; padding-bottom: 1.6rem; }
+    .gp-stage { grid-row: 1; position: relative; border: var(--border); border-radius: var(--r-sm); background: var(--c); padding: 0.75rem 0.3rem; text-align: center; }
+    .gp-stage-num { display: block; font-size: 0.65rem; font-weight: 800; color: var(--muted); font-family: 'SFMono-Regular', Menlo, Courier, monospace; }
+    .gp-stage-name { display: block; font-size: 0.82rem; font-weight: 700; color: var(--text); }
+    .gp-stage:not(:nth-child(7))::after { content: '→'; position: absolute; right: -1.1rem; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--text); font-size: 0.85rem; }
+    .gp-loop { grid-row: 2; grid-column: 4 / 6; position: relative; height: 24px; margin: 6px 24% 0; border: 2px solid var(--text); border-top: none; border-radius: 0 0 12px 12px; }
+    .gp-loop::before { content: '▲'; position: absolute; left: -6px; top: -9px; font-size: 9px; color: var(--text); }
+    .gp-loop span { position: absolute; left: 50%; bottom: -1.35rem; transform: translateX(-50%); font-size: 0.66rem; font-weight: 700; color: var(--sub); white-space: nowrap; }
+    .gp-after { grid-row: 2; grid-column: 7; margin-top: 4px; font-size: 0.66rem; line-height: 1.4; text-align: center; color: var(--sub); }
+    .gp-after::before { content: '↓'; display: block; font-weight: 700; color: var(--text); font-size: 0.85rem; }
+    .gp-stage-list .cs-step:nth-child(7) { background: var(--sage); }
+
+    @media (max-width: 760px) {
+      .cs-two-col, .cs-three-col { grid-template-columns: 1fr; }
+      .cs-quick-stats { width: 100%; }
+      .cs-qs { flex: 1 1 45%; padding: 0.85rem 0.75rem; border-bottom: var(--border); }
+      .gp-products { grid-template-columns: 1fr; gap: 0.6rem; }
+      .gp-links { grid-template-columns: 1fr; height: 20px; }
+      .gp-links span:not(:first-child) { display: none; }
+      .gp-flow { grid-template-columns: minmax(0, 1fr) 5.5rem; row-gap: 1.3rem; column-gap: 0; padding-bottom: 0; }
+      .gp-stage { grid-column: 1; height: 2.9rem; display: flex; align-items: center; gap: 0.6rem; padding: 0 1rem; text-align: left; }
+      .gp-stage:nth-child(1) { grid-row: 1; } .gp-stage:nth-child(2) { grid-row: 2; } .gp-stage:nth-child(3) { grid-row: 3; }
+      .gp-stage:nth-child(4) { grid-row: 4; } .gp-stage:nth-child(5) { grid-row: 5; } .gp-stage:nth-child(6) { grid-row: 6; }
+      .gp-stage:nth-child(7) { grid-row: 7; }
+      .gp-stage:not(:nth-child(7))::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -1.25rem; transform: translateX(-50%); }
+      .gp-loop { grid-column: 2; grid-row: 4 / 6; height: auto; width: 1.4rem; margin: 1.45rem 0 1.45rem 0.35rem; border: 2px solid var(--text); border-left: none; border-radius: 0 12px 12px 0; }
+      .gp-loop::before { content: '◀'; left: -5px; top: -8px; }
+      .gp-loop span { left: 1.9rem; bottom: auto; top: 50%; transform: translateY(-50%); }
+      .gp-after { grid-column: 1; grid-row: 8; margin-top: -0.9rem; font-size: 0.72rem; }
+    }
+    @media (max-width: 480px) { .cs-hero-title { font-size: 1.8rem; } .cs-cta-row { flex-direction: column; } .cs-cta-row .btn { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">PJ</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#work">AI Projects</a></li>
+        <li><a href="index.html#thoughts">Thoughts</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="cs-page-hero">
+
+      <a href="index.html#work" class="cs-back fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Selected Work
+      </a>
+
+      <div class="cs-hero-meta fade-in">
+        <span class="cs-meta-tag">Side Project</span>
+        <span class="cs-meta-tag">0 to 1</span>
+        <span class="cs-meta-tag">Marketplace</span>
+        <span class="cs-meta-tag live">Live Product</span>
+      </div>
+
+      <h1 class="cs-hero-title fade-in">
+        Guapd<br /><span class="highlight">AI-Powered Brand-Creator Collaboration Platform</span>
+      </h1>
+
+      <p class="cs-hero-sub fade-in">
+        A 0-to-1 side project I co-founded and built. One system for brand-creator deals in India, from discovery to payment. I owned strategy, product, design and all engineering, built AI-first with Claude Code.
+      </p>
+
+      <p class="cs-hero-note fade-in">
+        Built alongside full-time PM roles to go deep on AI-first product building. My co-founders now run it day to day.
+      </p>
+
+      <div class="cs-quick-stats fade-in">
+        <div class="cs-qs">
+          <span class="cs-qs-val">1,500</span>
+          <span class="cs-qs-label">Sign-ups (first 7 days)</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">3</span>
+          <span class="cs-qs-label">Products (on 1 platform)</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">950+</span>
+          <span class="cs-qs-label">Commits (Claude Code)</span>
+        </div>
+        <div class="cs-qs">
+          <span class="cs-qs-val">9</span>
+          <span class="cs-qs-label">Services (integrated)</span>
+        </div>
+      </div>
+
+      <div class="cs-cta-row fade-in">
+        <a href="https://guapd.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Visit guapd.com
+        </a>
+        <a href="index.html#work" class="btn btn-secondary">&larr; All Projects</a>
+      </div>
+
+    </div>
+
+    <div class="cs-body">
+
+      <!-- 01 PROBLEM -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">01 · The Problem</div>
+        <h2 class="cs-section-title">Brand-creator deals in India <span class="highlight">run on chaos</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              In India, brand-creator collaborations run through agencies, WhatsApp, DMs and bank transfers.
+            </p>
+            <p>
+              <strong>Neither side has transparency.</strong> Brands can&rsquo;t easily see what they are paying for. Creators can&rsquo;t easily see where a deal stands or when they will be paid.
+            </p>
+          </div>
+
+          <div class="cs-callout yellow">
+            <div class="cs-callout-label">How deals happen today</div>
+            <ul>
+              <li>Agencies in the middle</li>
+              <li>Negotiation over WhatsApp and DMs</li>
+              <li>Payment by bank transfer</li>
+              <li>No shared record for either side</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 RESEARCH & STRATEGY -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">02 · Research &amp; Strategy</div>
+        <h2 class="cs-section-title">The gap was <span class="highlight">workflow and trust, not discovery</span></h2>
+
+        <div class="cs-three-col" style="margin-bottom:2rem;">
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Market</div>
+            <h4>₹3,000 to 3,500 crore</h4>
+            <p>India&rsquo;s influencer marketing market (industry estimates).</p>
+          </div>
+          <div class="cs-callout pink">
+            <div class="cs-callout-label">Competition</div>
+            <h4>15+ competitors mapped</h4>
+            <p>Global and Indian players, compared side by side.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">Insight</div>
+            <h4>Discovery was not the gap</h4>
+            <p>The real gap was deal workflow and trust.</p>
+          </div>
+        </div>
+
+        <div class="cs-steps">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">The wedge</div>
+              <div class="cs-step-desc">One system for brand-creator deals.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Pricing</div>
+              <div class="cs-step-desc">Free for creators. Commission from brands.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">A tightly scoped launch</div>
+              <div class="cs-step-desc">Including a written list of what not to build first.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 WHAT I BUILT -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">03 · What I Built</div>
+        <h2 class="cs-section-title">A full product suite: <span class="highlight">3 products on 1 platform</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.5rem;">
+          <p>
+            I owned strategy, product, design and all engineering. Everything was built AI-first with Claude Code.
+          </p>
+        </div>
+
+        <div class="cs-quick-stats">
+          <div class="cs-qs">
+            <span class="cs-qs-val">950+</span>
+            <span class="cs-qs-label">Commits</span>
+          </div>
+          <div class="cs-qs">
+            <span class="cs-qs-val">90</span>
+            <span class="cs-qs-label">Pages</span>
+          </div>
+          <div class="cs-qs">
+            <span class="cs-qs-val">7</span>
+            <span class="cs-qs-label">User roles</span>
+          </div>
+          <div class="cs-qs">
+            <span class="cs-qs-val">81</span>
+            <span class="cs-qs-label">Database tables</span>
+          </div>
+        </div>
+
+        <div class="gp-diagram" role="img" aria-label="Diagram: Brand, Creator and Ops products all sit on one shared platform with a 7-stage deal lifecycle and an audit log">
+          <div class="gp-diagram-title">3 products, 1 platform</div>
+          <div class="gp-products">
+            <div class="gp-product">
+              <div class="gp-product-name">Brand product</div>
+              <div class="gp-product-for">Discover, offer, run campaigns</div>
+            </div>
+            <div class="gp-product">
+              <div class="gp-product-name">Creator product</div>
+              <div class="gp-product-for">Get vetted, deliver, get paid</div>
+            </div>
+            <div class="gp-product">
+              <div class="gp-product-name">Ops product</div>
+              <div class="gp-product-for">Vet, support, run operations</div>
+            </div>
+          </div>
+          <div class="gp-links" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="gp-platform">
+            <div class="gp-platform-name">One shared platform</div>
+            <div class="gp-platform-detail">7-stage deal lifecycle from offer to payment · Audit log on every status change</div>
+          </div>
+        </div>
+
+        <div class="cs-three-col" style="margin-bottom:2rem;">
+          <div class="cs-callout yellow">
+            <div class="cs-callout-label">Brand product</div>
+            <ul>
+              <li>AI creator discovery</li>
+              <li>Structured offers and negotiation</li>
+              <li>Multi-creator campaigns with per-campaign analytics and a billing ledger</li>
+              <li>Team accounts</li>
+              <li>An approval gate: brands browse instantly while ops vets their first deal</li>
+            </ul>
+          </div>
+          <div class="cs-callout pink">
+            <div class="cs-callout-label">Creator product</div>
+            <ul>
+              <li>Onboarding and 4-tier vetting with appeals</li>
+              <li>Public storefronts with verified Instagram stats</li>
+              <li>Rate cards</li>
+              <li>Versioned deliverables with revisions</li>
+              <li>Automated invoicing with flexible payment terms</li>
+            </ul>
+          </div>
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Ops product</div>
+            <ul>
+              <li>Internal console for vetting and appeals</li>
+              <li>Outreach pipeline and WhatsApp broadcasts</li>
+              <li>Settings that change without a deploy</li>
+              <li>A sales playbook</li>
+              <li>Managed content-shoot operations with role-restricted P&amp;L</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cs-pullout">
+          <p>Every deal follows a 7-stage lifecycle from offer to payment. Every status change is written to an audit log.</p>
+        </div>
+
+        <div class="gp-diagram" role="img" aria-label="Diagram: the 7-stage deal lifecycle. Offer, Negotiate, Agree, Deliver, Review, Approve, Payment. Review can loop back to Deliver for a revision. After Payment, the deal moves to history with a one-tap next deal.">
+          <div class="gp-diagram-title">The 7-stage deal lifecycle</div>
+          <div class="gp-flow">
+            <div class="gp-stage" style="--c: var(--yellow)"><span class="gp-stage-num">1</span><span class="gp-stage-name">Offer</span></div>
+            <div class="gp-stage" style="--c: var(--pink)"><span class="gp-stage-num">2</span><span class="gp-stage-name">Negotiate</span></div>
+            <div class="gp-stage" style="--c: var(--blue)"><span class="gp-stage-num">3</span><span class="gp-stage-name">Agree</span></div>
+            <div class="gp-stage" style="--c: var(--green)"><span class="gp-stage-num">4</span><span class="gp-stage-name">Deliver</span></div>
+            <div class="gp-stage" style="--c: var(--peach)"><span class="gp-stage-num">5</span><span class="gp-stage-name">Review</span></div>
+            <div class="gp-stage" style="--c: var(--purple)"><span class="gp-stage-num">6</span><span class="gp-stage-name">Approve</span></div>
+            <div class="gp-stage" style="--c: var(--sage)"><span class="gp-stage-num">7</span><span class="gp-stage-name">Payment</span></div>
+            <div class="gp-loop" aria-hidden="true"><span>Revision</span></div>
+            <div class="gp-after" aria-hidden="true">Deal history<br />+ one-tap &ldquo;next deal&rdquo;</div>
+          </div>
+        </div>
+
+        <div class="cs-steps gp-stage-list">
+          <div class="cs-step">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">Offer</div>
+              <div class="cs-step-desc">The brand sends a structured offer: deliverables, price, timeline, revisions and usage rights. The creator gets a WhatsApp ping.</div>
+            </div>
+          </div>
+          <div class="cs-step">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Negotiate</div>
+              <div class="cs-step-desc">The creator accepts, counters or declines. The thread and offer history are kept.</div>
+            </div>
+          </div>
+          <div class="cs-step">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Agree</div>
+              <div class="cs-step-desc">Terms are locked and recorded, with an audit entry.</div>
+            </div>
+          </div>
+          <div class="cs-step">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">Deliver</div>
+              <div class="cs-step-desc">The creator uploads the content, with versions.</div>
+            </div>
+          </div>
+          <div class="cs-step">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">Review</div>
+              <div class="cs-step-desc">The brand reviews or asks for a revision. A revision counts against the agreed limit and loops back to Deliver.</div>
+            </div>
+          </div>
+          <div class="cs-step">
+            <div class="cs-step-num">06</div>
+            <div>
+              <div class="cs-step-title">Approve</div>
+              <div class="cs-step-desc">The brand approves the content, and the creator goes live.</div>
+            </div>
+          </div>
+          <div class="cs-step">
+            <div class="cs-step-num">07</div>
+            <div>
+              <div class="cs-step-title">Payment</div>
+              <div class="cs-step-desc">Payment is released and tracked. The deal then lands in history.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 AI DONE RESPONSIBLY -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">04 · AI Done Responsibly</div>
+        <h2 class="cs-section-title">AI on understanding. <span class="highlight">Code on ranking.</span></h2>
+
+        <div class="cs-prose" style="margin-bottom:1.75rem;">
+          <p>
+            Claude-powered search turns a brand&rsquo;s plain-language brief into structured filters. These are the product decisions that keep it trustworthy.
+          </p>
+        </div>
+
+        <div class="cs-steps">
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">01</div>
+            <div>
+              <div class="cs-step-title">The model reads, it never ranks</div>
+              <div class="cs-step-desc">The model only reads the brief. Ranking stays in code, so match reasons can never be invented.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">02</div>
+            <div>
+              <div class="cs-step-title">Briefs are untrusted input</div>
+              <div class="cs-step-desc">Every brief is treated as untrusted, with prompt-injection tests.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">03</div>
+            <div>
+              <div class="cs-step-title">Verified vs self-reported, labelled</div>
+              <div class="cs-step-desc">Verified creator stats and self-reported stats are labelled separately.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">04</div>
+            <div>
+              <div class="cs-step-title">Creators can opt out</div>
+              <div class="cs-step-desc">Creators can choose not to appear in AI search.</div>
+            </div>
+          </div>
+          <div class="cs-step fade-in">
+            <div class="cs-step-num">05</div>
+            <div>
+              <div class="cs-step-title">Restricted search for unapproved brands</div>
+              <div class="cs-step-desc">Brands that are not yet approved get restricted search, to prevent abuse.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 PLATFORM, TRUST & COMPLIANCE -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">05 · Platform, Trust &amp; Compliance</div>
+        <h2 class="cs-section-title">Built to be <span class="highlight">trusted with money and data</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-prose">
+            <p>
+              <strong>9 services integrated.</strong> These include the Instagram API (Meta App Review approved), Meta Creator Marketplace search, Razorpay, WhatsApp and SMS, email and PostHog.
+            </p>
+            <p>
+              <strong>Secured and tested.</strong> 84 database access policies. 38 automated test scripts.
+            </p>
+            <p>
+              <strong>Released safely.</strong> Every release went through staging, feature flags and staged rollouts.
+            </p>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="cs-callout green">
+              <div class="cs-callout-label">Data protection</div>
+              <h4>Designed around India&rsquo;s DPDP law</h4>
+              <p>Consent-first analytics from the start.</p>
+            </div>
+            <div class="cs-callout purple">
+              <div class="cs-callout-label">Payments</div>
+              <h4>No funds held in escrow</h4>
+              <p>A deliberate choice to stay outside payment-aggregator regulation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-tech-list">
+          <span class="cs-tech-tag">Claude Code</span>
+          <span class="cs-tech-tag">Claude API</span>
+          <span class="cs-tech-tag">Instagram API</span>
+          <span class="cs-tech-tag">Meta Creator Marketplace</span>
+          <span class="cs-tech-tag">Razorpay</span>
+          <span class="cs-tech-tag">WhatsApp</span>
+          <span class="cs-tech-tag">SMS</span>
+          <span class="cs-tech-tag">Email</span>
+          <span class="cs-tech-tag">PostHog</span>
+          <span class="cs-tech-tag">Feature Flags</span>
+        </div>
+      </section>
+
+      <!-- 06 LAUNCH & RESULTS -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">06 · Launch &amp; Results</div>
+        <h2 class="cs-section-title">Strong creator pull <span class="highlight">from day one</span></h2>
+
+        <div class="cs-three-col">
+          <div class="cs-callout yellow">
+            <div class="cs-callout-label">Sign-ups</div>
+            <h4>1,500</h4>
+            <p>(first 7 days after launch)</p>
+          </div>
+          <div class="cs-callout pink">
+            <div class="cs-callout-label">Largest campaign</div>
+            <h4>70 deliverables</h4>
+            <p>(one brand, one campaign)</p>
+          </div>
+          <div class="cs-callout blue">
+            <div class="cs-callout-label">Instrumentation</div>
+            <h4>28 product events</h4>
+            <p>(tracked in PostHog to steer the roadmap)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 WHAT DIDN'T WORK -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">07 · What Didn&rsquo;t Work &amp; the Pivot</div>
+        <h2 class="cs-section-title">Creators came easily. <span class="highlight">Brands did not.</span></h2>
+
+        <div class="cs-two-col">
+          <div class="cs-callout peach">
+            <div class="cs-callout-label">What didn&rsquo;t work</div>
+            <h4>Brands were slow to leave agencies</h4>
+            <p>Creators joined easily. Brands were slow to leave the agency model.</p>
+          </div>
+          <div class="cs-callout green">
+            <div class="cs-callout-label">The pivot</div>
+            <h4>Narrower focus, managed shoots</h4>
+            <p>We narrowed to beauty, fashion and D2C brands. We added managed content shoots, with a 2-sided money model: brands pay Guapd, Guapd pays creators.</p>
+          </div>
+        </div>
+
+        <div class="cs-pullout">
+          <p>That&rsquo;s what started winning brands.</p>
+        </div>
+      </section>
+
+      <!-- 08 WHAT I LEARNED -->
+      <section class="cs-section fade-in">
+        <div class="cs-section-num">08 · What I Learned</div>
+        <h2 class="cs-section-title">Three <span class="highlight">takeaways</span></h2>
+
+        <ul class="cs-learnings" style="max-width:720px;">
+          <li>
+            <span><strong>The hardest side of a marketplace sets your go-to-market.</strong> Creators were easy to win. Brands decided the strategy.</span>
+          </li>
+          <li>
+            <span><strong>Keep AI on understanding. Keep ranking deterministic.</strong> That is how users learn to trust the results.</span>
+          </li>
+          <li>
+            <span><strong>Build capability ahead. Switch it on when the business needs it.</strong> Feature flags and settings that change without a deploy made that possible.</span>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+
+    <div class="cs-footer-cta">
+      <h2>Want to talk about Guapd?</h2>
+      <p>I&rsquo;m happy to walk through the strategy, the product decisions or how I built it AI-first.</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn btn-primary btn-lg">Get in Touch</a>
+        <a href="https://guapd.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">Visit guapd.com &rarr;</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Palak Jain &nbsp;&middot;&nbsp; Senior Product Manager &nbsp;&middot;&nbsp; Mumbai, India</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

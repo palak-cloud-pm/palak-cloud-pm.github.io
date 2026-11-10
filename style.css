@@ -465,6 +465,7 @@ strong { color: var(--text); font-weight: 600; }
 .achievement-card:nth-child(4) { background: var(--pink);   }
 .achievement-card:nth-child(5) { background: var(--purple); }
 .achievement-card:nth-child(6) { background: var(--peach);  }
+.achievement-card:nth-child(7) { background: var(--sage);   }
 .achievement-card:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-sm); }
 
 .ach-icon  { font-size: 1.3rem; flex-shrink: 0; line-height: 1; }
@@ -597,6 +598,7 @@ strong { color: var(--text); font-weight: 600; }
 .work-card:nth-child(2) { background: #fff; --card-glow: 220, 180, 60;  }
 .work-card:nth-child(3) { background: #fff; --card-glow: 235, 160, 110; }
 .work-card:nth-child(4) { background: #fff; --card-glow: 100, 170, 230; }
+.work-card--featured { grid-column: 1 / -1; }
 
 .work-num {
   font-size: 7.5rem; font-weight: 700; font-style: italic;
